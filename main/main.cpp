@@ -48,7 +48,7 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 			break;
 		default:
 			ESP_LOGI(TAG, "PIR_UNDEFINED");
-//			wifi.send("PIR_UNDEFINED");
+			wifi.send("PIR_UNDEFINED");
 			break;
 	}
 }

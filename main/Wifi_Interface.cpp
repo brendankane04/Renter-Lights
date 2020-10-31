@@ -191,8 +191,10 @@ void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 
 void Wifi_Interface::send(char *data, int len)
 {
+	//Take the mutex & end the function if it fails
 	if(xSemaphoreTake(mutex, (TickType_t) 100) != pdTRUE)
 		return;
+
 	int send_socket;
 	ESP_LOGI(TAG_TCP,"tcp_client task started");
 
@@ -243,6 +245,8 @@ void Wifi_Interface::send(char *data, int len)
 		break;
 	}
 	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
+
+	//Release the mutex
 	xSemaphoreGive(mutex);
 }
 
@@ -255,6 +259,10 @@ void Wifi_Interface::send(char *data)
 
 void Wifi_Interface::recv(char *recv_buf, int size)
 {
+	//Take the mutex & end the function if it fails
+	if(xSemaphoreTake(mutex, (TickType_t) 100) != pdTRUE)
+		return;
+
 	int recv_socket, recv_flag;
 	ESP_LOGI(TAG_TCP,"tcp_client task started");
 
@@ -300,4 +308,7 @@ void Wifi_Interface::recv(char *recv_buf, int size)
 		break;
 	}
 	ESP_LOGI(TAG_TCP, "... tcp_client task closed");
+
+	//Release the mutex
+	xSemaphoreGive(mutex);
 }
