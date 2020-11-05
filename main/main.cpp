@@ -55,6 +55,10 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 	}
 }
 
+void servo_handler(void *arg)
+{
+
+}
 
 void app_main(void)
 {
