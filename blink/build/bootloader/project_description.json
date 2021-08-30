@@ -1,8 +1,8 @@
 {
     "project_name":       "bootloader",
     "project_path":       "C:/Users/brend/OneDrive/Desktop/esp-idf/components/bootloader/subproject",
-    "build_dir":          "C:/Users/brend/OneDrive/Desktop/esp-idf/examples/get-started/blink/build/bootloader",
-    "config_file":        "C:/Users/brend/OneDrive/Desktop/esp-idf/examples/get-started/blink/sdkconfig",
+    "build_dir":          "C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/bootloader",
+    "config_file":        "C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/sdkconfig",
     "config_defaults":    "",
     "app_elf":            "bootloader.elf",
     "app_bin":            "bootloader.bin",

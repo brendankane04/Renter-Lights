@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/brend/OneDrive/Desktop/esp-idf/examples/get-started/blink/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

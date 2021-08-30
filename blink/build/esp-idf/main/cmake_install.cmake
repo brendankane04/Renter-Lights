@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/brend/OneDrive/Desktop/esp-idf/examples/get-started/blink/main
+# Install script for directory: C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
