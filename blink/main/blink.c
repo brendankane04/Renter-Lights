@@ -16,6 +16,7 @@
    or you can edit the following line and set a number here.
 */
 #define BLINK_GPIO GPIO_NUM_33
+#define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
 char sbt0811_in[4] =
 {
@@ -58,7 +59,7 @@ void move_stepper(int step_count)
             gpio_set_level(sbt0811_in[i], step_positions[current_step][i]);
         }
 
-        vTaskDelay(step_time / portTICK_PERIOD_MS);
+        delay(step_time);
     }
 }
 
@@ -69,6 +70,9 @@ void app_main(void)
 	        gpio_reset_pin(sbt0811_in[i]);
 	        gpio_set_direction(sbt0811_in[i], GPIO_MODE_OUTPUT);
 	}
+
+	int state = 1;
+	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
 	int steps_left   = full_steps_count;
 
@@ -85,7 +89,10 @@ void app_main(void)
     	steps_left = full_steps_count;
     	direction  = (direction > 0 ? -1 : 1);
 
-    	vTaskDelay(500 / portTICK_PERIOD_MS);
+    	delay(500);
+
+    	gpio_set_level(BLINK_GPIO, state);
+    	state = !state;
 
         printf("Stepping Process Completed\n");
     }
