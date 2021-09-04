@@ -22,14 +22,14 @@
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
 //You can get these value from the datasheet of servo you use, in general pulse width varies between 1000 to 2000 mocrosecond
-#define SERVO_MIN_PULSEWIDTH 1000 //Minimum pulse width in microsecond
-#define SERVO_MAX_PULSEWIDTH 2000 //Maximum pulse width in microsecond
+#define SERVO_MIN_PULSEWIDTH 1000 //Minimum pulse width in microseconds
+#define SERVO_MAX_PULSEWIDTH 2000 //Maximum pulse width in microseconds
 #define SERVO_MAX_DEGREE 180 //Maximum angle in degree upto which servo can rotate
 
 static void mcpwm_example_gpio_initialize(void)
 {
     printf("initializing mcpwm servo control gpio......\n");
-    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, 15);    //Set GPIO 18 as PWM0A, to which servo is connected
+    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, 15);    //Set GPIO 15 as PWM0A, to which servo is connected
 }
 
 /**
@@ -47,12 +47,18 @@ static uint32_t servo_per_degree_init(uint32_t degree_of_rotation)
     return cal_pulsewidth;
 }
 
+static void servo_set_pos(uint32_t pos)
+{
+	uint32_t angle = servo_per_degree_init(pos);
+	mcpwm_set_duty_in_us(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, angle);
+}
+
 /**
  * @brief Configure MCPWM module
  */
 void mcpwm_example_servo_control(void *arg)
 {
-    uint32_t angle, count;
+    uint32_t count;
     //1. mcpwm gpio initialization
     mcpwm_example_gpio_initialize();
 
@@ -68,9 +74,7 @@ void mcpwm_example_servo_control(void *arg)
     while (1) {
         for (count = 0; count < SERVO_MAX_DEGREE; count++) {
             printf("Angle of rotation: %d\n", count);
-            angle = servo_per_degree_init(count);
-            printf("pulse width: %dus\n", angle);
-            mcpwm_set_duty_in_us(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, angle);
+            servo_set_pos(count);
             vTaskDelay(10);     //Add delay, since it takes time for servo to rotate, generally 100ms/60degree rotation at 5V
         }
     }
