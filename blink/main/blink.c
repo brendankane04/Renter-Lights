@@ -23,7 +23,7 @@
 
 //You can get these value from the datasheet of servo you use, in general pulse width varies between 1000 to 2000 mocrosecond
 #define SERVO_MIN_PULSEWIDTH 1000 //Minimum pulse width in microseconds
-#define SERVO_MAX_PULSEWIDTH 2000 //Maximum pulse width in microseconds
+#define SERVO_MAX_PULSEWIDTH 3000 //Maximum pulse width in microseconds
 #define SERVO_MAX_DEGREE 180 //Maximum angle in degree upto which servo can rotate
 
 static void mcpwm_example_gpio_initialize(void)
@@ -53,14 +53,27 @@ static void servo_set_pos(uint32_t pos)
 	mcpwm_set_duty_in_us(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, angle);
 }
 
+static void servo_set_on()
+{
+	servo_set_pos(180);
+}
+
+static void servo_set_off()
+{
+	servo_set_pos(0);
+}
+
 /**
  * @brief Configure MCPWM module
  */
 void mcpwm_example_servo_control(void *arg)
 {
-    uint32_t count;
+    uint32_t status = 0, pos = 0;
     //1. mcpwm gpio initialization
     mcpwm_example_gpio_initialize();
+
+    //Initialize the input GPIO
+    gpio_set_direction(GPIO_NUM_14, GPIO_MODE_INPUT);
 
     //2. initial mcpwm configuration
     printf("Configuring Initial Parameters of mcpwm......\n");
@@ -72,11 +85,18 @@ void mcpwm_example_servo_control(void *arg)
     pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
     mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);    //Configure PWM0A & PWM0B with above settings
     while (1) {
-        for (count = 0; count < SERVO_MAX_DEGREE; count++) {
-            printf("Angle of rotation: %d\n", count);
-            servo_set_pos(count);
-            vTaskDelay(10);     //Add delay, since it takes time for servo to rotate, generally 100ms/60degree rotation at 5V
-        }
+//        for (count = 0; count < SERVO_MAX_DEGREE; count++) {
+//            printf("Angle of rotation: %d\n", count);
+//            servo_set_pos(count);
+//            vTaskDelay(10);     //Add delay, since it takes time for servo to rotate, generally 100ms/60degree rotation at 5V
+//        }
+
+    	status = gpio_get_level(GPIO_NUM_14);
+    	if(status)	servo_set_on();
+    	else		servo_set_off();
+    	printf("Setting position to (%d)", pos);
+
+    	delay(1000);
     }
 }
 
