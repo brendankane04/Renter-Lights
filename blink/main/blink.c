@@ -68,12 +68,20 @@ static void servo_set_off()
  */
 void mcpwm_example_servo_control(void *arg)
 {
-    uint32_t status = 0, pos = 0;
+    int status = 0, pos = 0;
     //1. mcpwm gpio initialization
     mcpwm_example_gpio_initialize();
 
     //Initialize the input GPIO
-    gpio_set_direction(GPIO_NUM_14, GPIO_MODE_INPUT);
+    gpio_config_t input_io;
+    input_io.pin_bit_mask = 1 << GPIO_NUM_2;
+    input_io.mode = GPIO_MODE_INPUT;
+    input_io.pull_up_en = GPIO_PULLUP_DISABLE;
+    input_io.pull_down_en = GPIO_PULLDOWN_ENABLE;
+    input_io.intr_type = GPIO_INTR_DISABLE;
+    gpio_config(&input_io);
+
+    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
     //2. initial mcpwm configuration
     printf("Configuring Initial Parameters of mcpwm......\n");
@@ -91,9 +99,13 @@ void mcpwm_example_servo_control(void *arg)
 //            vTaskDelay(10);     //Add delay, since it takes time for servo to rotate, generally 100ms/60degree rotation at 5V
 //        }
 
-    	status = gpio_get_level(GPIO_NUM_14);
-    	if(status)	servo_set_on();
+    	status = gpio_get_level(GPIO_NUM_2);
+    	if(!status)	servo_set_on();
     	else		servo_set_off();
+
+    	if(!status)	gpio_set_level(BLINK_GPIO, 1);
+    	else		gpio_set_level(BLINK_GPIO, 0);
+
     	printf("Setting position to (%d)", pos);
 
     	delay(1000);
