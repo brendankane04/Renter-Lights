@@ -8,8 +8,7 @@ C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/monitor.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/encrypted-flash.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/_project_elf_src.dir
-C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/list_install_components.dir
-C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/blink.elf.dir
+C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/Renter-Lights.elf.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/size.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/size-files.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/size-components.dir
@@ -17,6 +16,7 @@ C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/uf2.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/edit_cache.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/rebuild_cache.dir
+C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/list_install_components.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/install/local.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/install.dir
 C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build/CMakeFiles/install/strip.dir

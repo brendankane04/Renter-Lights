@@ -3,7 +3,7 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := blink
+PROJECT_NAME := Renter-Lights
 
 include $(IDF_PATH)/make/project.mk
 
@@ -11,7 +11,7 @@ setup:
 	%userprofile%\OneDrive\Desktop\esp-idf\export.bat
 
 flash: 
-	idf.py build && idf.py -p COM6 flash
+	idf.py build && idf.py -p COM7 flash
 	
 test:
 	echo "TEST"

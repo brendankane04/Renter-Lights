@@ -165,7 +165,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=blink
+CMAKE_PROJECT_NAME:STATIC=Renter-Lights
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/Users/brend/.espressif/tools/xtensa-esp32-elf/esp-2020r3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-ranlib.exe
@@ -264,6 +264,12 @@ PYTHON_DEPS_CHECKED:UNINITIALIZED=1
 
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=C:/Users/brend/.espressif/python_env/idf4.3_py3.8_env/Scripts/python.exe
+
+//Value Computed by CMake
+Renter-Lights_BINARY_DIR:STATIC=C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink/build
+
+//Value Computed by CMake
+Renter-Lights_SOURCE_DIR:STATIC=C:/Users/brend/OneDrive/Documents/Projects/Renter-Lights/blink
 
 //Allow unsafe builds. These builds ARE NOT SECURE.
 UNSAFE_BUILD:BOOL=OFF
