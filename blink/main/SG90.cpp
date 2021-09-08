@@ -4,11 +4,11 @@
 #include "SG90.h"
 
 
-SG90::SG90()
+SG90::SG90(gpio_num_t pin)
 {
 	//1. Initial gpio configuration
     printf("initializing mcpwm servo control gpio......\n");
-    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, 15);    //Set GPIO 15 as PWM0A, to which servo is connected
+    mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, pin);    //Set GPIO 15 as PWM0A, to which servo is connected
 
     //2. initial mcpwm configuration
     printf("Configuring Initial Parameters of mcpwm......\n");
@@ -22,33 +22,29 @@ SG90::SG90()
 
 }
 
-/**
- * @brief Use this function to calcute pulse width for per degree rotation
- *
- * @param  degree_of_rotation the angle in degree to which servo has to rotate
- *
- * @return
- *     - calculated pulse width
- */
-uint32_t SG90::degree_init(uint32_t degree_of_rotation)
+
+uint32_t SG90::get_pulsewidth(uint32_t degree_of_rotation)
 {
     uint32_t cal_pulsewidth = 0;
     cal_pulsewidth = (SERVO_MIN_PULSEWIDTH + (((SERVO_MAX_PULSEWIDTH - SERVO_MIN_PULSEWIDTH) * (degree_of_rotation)) / (SERVO_MAX_DEGREE)));
     return cal_pulsewidth;
 }
 
+
 void SG90::set_pos(uint32_t pos)
 {
-	uint32_t angle = degree_init(pos);
+	uint32_t angle = get_pulsewidth(pos);
 	mcpwm_set_duty_in_us(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, angle);
 }
 
+
 void SG90::set_on()
 {
-	set_pos(180);
+	set_pos(SERVO_ON_DEGREE);
 }
+
 
 void SG90::set_off()
 {
-	set_pos(0);
+	set_pos(SERVO_OFF_DEGREE);
 }
