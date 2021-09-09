@@ -34,7 +34,7 @@ void servo_control(void *arg)
     	if(!status)	gpio_set_level(BLINK_GPIO, 1);
     	else		gpio_set_level(BLINK_GPIO, 0);
 
-    	printf("Setting position to (%d)", pos);
+    	printf("Setting position to (%d)\n", pos);
 
     	delay(1000);
     }
