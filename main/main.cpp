@@ -8,6 +8,7 @@
 #include "sdkconfig.h"
 #include "SG90.h"
 #include "SR501.h"
+#include "Wifi_Interface.h"
 
 
 #define BLINK_GPIO GPIO_NUM_33
@@ -24,6 +25,7 @@ void servo_control(void *arg)
     //Servo controlling the lights
     SG90 servo(GPIO_NUM_15);
     SR501 pir(GPIO_NUM_2);
+    Wifi_Interface wifi1;
 
     while(1)
     {

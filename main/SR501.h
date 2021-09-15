@@ -1,6 +1,10 @@
 #ifndef SR501_H
 #define SR501_H
 
+
+#include "driver/gpio.h"
+
+
 //Driver for the SR501 PIR sensor
 //Datasheet: https://www.epitran.it/ebayDrive/datasheet/44.pdf
 class SR501

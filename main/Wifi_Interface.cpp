@@ -61,16 +61,18 @@ void event_handler
     }
 }
 
-
 Wifi_Interface::Wifi_Interface()
 {
+	//Just the constructor
+}
+
+void Wifi_Interface::init()
+{
 	esp_err_t err;
-	uint8_t ssid[32];
-	uint8_t password[64];
+	uint8_t ssid[32] = "Home Network";
+	uint8_t password[64] = "Thanks Brendan!";
 	max_tries = 10;
 
-	strcpy(ssid, "Home Newtork");
-	strcpy(password, "ThanksBrendan!");
 
 
 	//Initialize the lwIP interface & start the task
@@ -116,13 +118,20 @@ Wifi_Interface::Wifi_Interface()
 	ESP_ERROR_CHECK(err);
 
 	//Wifi config struct for SSID, password, auth mode, etc.
+	wifi_config_t wifi_config;
+	stat_config_t sta_config;
+
+	sta_config.ssid = ssid;
+	sta_config.password = password;
+
+	wifi_config.sta = sta_config
     wifi_config_t wifi_config =
     {
         .sta =
         {
 			.ssid = ssid,
             .password = password,
-			 .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+//			 .threshold.authmode = WIFI_AUTH_WPA2_PSK,
             .pmf_cfg =
             {
                 .capable = true,

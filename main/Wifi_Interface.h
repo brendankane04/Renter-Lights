@@ -28,10 +28,10 @@ class Wifi_Interface
 	public:
 
 	private:
-		void event_handler(void*, esp_event_base_t, int32_t, void*);
 
 	public:
 		Wifi_Interface();
+		void init();
 };
 
 
