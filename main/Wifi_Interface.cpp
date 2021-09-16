@@ -28,6 +28,7 @@ EventGroupHandle_t s_wifi_event_group;
 int s_retry_num = 0;
 int max_tries = 10;
 
+using namespace std;
 
 void event_handler
 (
@@ -61,19 +62,25 @@ void event_handler
     }
 }
 
-Wifi_Interface::Wifi_Interface()
-{
-	//Just the constructor
-}
-
-void Wifi_Interface::init()
+void wifi_init()
 {
 	esp_err_t err;
 	uint8_t ssid[32] = "Home Network";
-	uint8_t password[64] = "Thanks Brendan!";
+	uint8_t password[64] = "ThanksBrendan!";
 	max_tries = 10;
 
+	//Initialize NVS
+    err = nvs_flash_init();
+    if(err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    {
+    	err = nvs_flash_erase();
+    	ESP_ERROR_CHECK(err);
+    	err = nvs_flash_init();
+    }
 
+    ESP_ERROR_CHECK(err);
+	//Create the event group for the wifi
+    s_wifi_event_group = xEventGroupCreate();
 
 	//Initialize the lwIP interface & start the task
 	err = esp_netif_init();
@@ -119,26 +126,33 @@ void Wifi_Interface::init()
 
 	//Wifi config struct for SSID, password, auth mode, etc.
 	wifi_config_t wifi_config;
-	stat_config_t sta_config;
+	wifi_sta_config_t sta_config;
+	wifi_pmf_config_t pmf_config;
 
-	sta_config.ssid = ssid;
-	sta_config.password = password;
+	pmf_config.capable = true;
+	pmf_config.required = false;
 
-	wifi_config.sta = sta_config
-    wifi_config_t wifi_config =
-    {
-        .sta =
-        {
-			.ssid = ssid,
-            .password = password,
-//			 .threshold.authmode = WIFI_AUTH_WPA2_PSK,
-            .pmf_cfg =
-            {
-                .capable = true,
-                .required = false
-            },
-        },
-    };
+	strcpy((char*) sta_config.ssid, (char*) ssid);
+	strcpy((char*) sta_config.password, (char*) password);
+	sta_config.pmf_cfg = pmf_config;
+
+	wifi_config.sta = sta_config;
+
+//    wifi_config_t wifi_config =
+//    {
+//        .sta =
+//        {
+//			.ssid = ssid,
+//            .password = password,
+////			 .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+//            .pmf_cfg =
+//            {
+//                .capable = true,
+//                .required = false
+//            },
+//        },
+//    };
+
     //Set the wifi mode to station (basically the device connecting to the router)
     err = esp_wifi_set_mode(WIFI_MODE_STA);
     ESP_ERROR_CHECK(err);

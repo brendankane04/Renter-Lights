@@ -25,7 +25,7 @@ void servo_control(void *arg)
     //Servo controlling the lights
     SG90 servo(GPIO_NUM_15);
     SR501 pir(GPIO_NUM_2);
-    Wifi_Interface wifi1;
+
 
     while(1)
     {
@@ -44,6 +44,11 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
+	esp_err_t err;
+
+
+    wifi_init();
+
     printf("Testing servo motor.......\n");
-    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);
+//    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);
 }

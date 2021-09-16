@@ -21,19 +21,17 @@
 #ifndef MAIN_WIFI_INTERFACE_H_
 #define MAIN_WIFI_INTERFACE_H_
 
-class Wifi_Interface
-{
-	private:
 
-	public:
+//A class was avoided to avoid compilation issues
+void event_handler
+(
+	void* arg,
+	esp_event_base_t event_base,
+	int32_t event_id,
+	void* event_data
+);
 
-	private:
-
-	public:
-		Wifi_Interface();
-		void init();
-};
-
+void wifi_init();
 
 
 #endif /* MAIN_WIFI_INTERFACE_H_ */
