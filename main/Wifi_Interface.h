@@ -31,7 +31,7 @@ void event_handler
 	void* event_data
 );
 
-void wifi_init();
+void wifi_init_sta();
 
 
 #endif /* MAIN_WIFI_INTERFACE_H_ */
