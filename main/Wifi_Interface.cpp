@@ -97,36 +97,39 @@ void wifi_init_sta(void)
                                                         NULL,
                                                         &instance_got_ip));
 
+
 	//Wifi config struct for SSID, password, auth mode, etc.
-	wifi_config_t wifi_config;
-	wifi_sta_config_t sta_config;
-	wifi_pmf_config_t pmf_config;
 
-	pmf_config.capable = true;
-	pmf_config.required = false;
-
-	strcpy((char*) sta_config.ssid, (char*) ssid);
-	strcpy((char*) sta_config.password, (char*) password);
-
-	sta_config.pmf_cfg = pmf_config;
-
-	wifi_config.sta = sta_config;
-
-//    wifi_config_t wifi_config = {
-//        .sta = {
-//            .ssid = EXAMPLE_ESP_WIFI_SSID,
-//            .password = EXAMPLE_ESP_WIFI_PASS,
-//            /* Setting a password implies station will connect to all security modes including WEP/WPA.
-//             * However these modes are deprecated and not advisable to be used. Incase your Access point
-//             * doesn't support WPA2, these mode can be enabled by commenting below line */
-//	     .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+//	wifi_config_t wifi_config;
+//	wifi_sta_config_t sta_config;
+//	wifi_pmf_config_t pmf_config;
 //
-//            .pmf_cfg = {
-//                .capable = true,
-//                .required = false
-//            },
-//        },
-//    };
+//	pmf_config.capable = true;
+//	pmf_config.required = false;
+//
+//	strcpy((char*) sta_config.ssid, (char*) ssid);
+//	strcpy((char*) sta_config.password, (char*) password);
+//
+//	sta_config.pmf_cfg = pmf_config;
+//
+//	wifi_config.sta = sta_config;
+
+    wifi_config_t wifi_config = {
+        .sta = {
+            .ssid = EXAMPLE_ESP_WIFI_SSID,
+            .password = EXAMPLE_ESP_WIFI_PASS,
+            /* Setting a password implies station will connect to all security modes including WEP/WPA.
+             * However these modes are deprecated and not advisable to be used. Incase your Access point
+             * doesn't support WPA2, these mode can be enabled by commenting below line */
+	     .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+
+            .pmf_cfg = {
+                .capable = true,
+                .required = false
+            },
+        },
+    };
+
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
