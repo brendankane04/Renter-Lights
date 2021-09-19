@@ -44,9 +44,6 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
-	esp_err_t err;
-
-
     wifi_init_sta();
 
     printf("Testing servo motor.......\n");
