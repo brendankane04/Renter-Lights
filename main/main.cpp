@@ -44,7 +44,7 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
-    wifi_init_sta();
+    Wifi_Interface wifi1;
 
     printf("Testing servo motor.......\n");
 //    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);

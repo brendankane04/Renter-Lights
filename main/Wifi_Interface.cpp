@@ -14,9 +14,9 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
-
 #include "lwip/err.h"
 #include "lwip/sys.h"
+#include "Wifi_Interface.h"
 
 /* The examples use WiFi configuration that you can set via project configuration menu
 
@@ -134,4 +134,10 @@ void wifi_init_sta(void)
 	ESP_ERROR_CHECK(esp_event_handler_instance_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, instance_got_ip));
 	ESP_ERROR_CHECK(esp_event_handler_instance_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, instance_any_id));
 	vEventGroupDelete(s_wifi_event_group);
+}
+
+Wifi_Interface::Wifi_Interface()
+{
+	//Call to the reference code
+	wifi_init_sta();
 }
