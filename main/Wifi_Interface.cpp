@@ -16,6 +16,9 @@
 #include "nvs_flash.h"
 #include "lwip/err.h"
 #include "lwip/sys.h"
+#include "lwip/sockets.h"
+#include "lwip/netdb.h"
+#include "lwip/dns.h"
 #include "Wifi_Interface.h"
 
 /* The examples use WiFi configuration that you can set via project configuration menu
