@@ -144,3 +144,8 @@ Wifi_Interface::Wifi_Interface()
 	//Call to the reference code
 	wifi_init_sta();
 }
+
+void Wifi_Interface::send(char *data)
+{
+
+}

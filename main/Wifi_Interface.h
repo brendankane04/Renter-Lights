@@ -38,6 +38,7 @@ class Wifi_Interface
 {
 	public:
 		Wifi_Interface();
+		void send(char *data);
 };
 
 #endif /* MAIN_WIFI_INTERFACE_H_ */
