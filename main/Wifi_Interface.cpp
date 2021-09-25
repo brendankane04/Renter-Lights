@@ -147,5 +147,48 @@ Wifi_Interface::Wifi_Interface()
 
 void Wifi_Interface::send(char *data)
 {
-
+	ESP_LOGI(TAG,"tcp_client task started \n");
+	    struct sockaddr_in tcpServerAddr;
+	    tcpServerAddr.sin_addr.s_addr = inet_addr(TCPServerIP);
+	    tcpServerAddr.sin_family = AF_INET;
+	    tcpServerAddr.sin_port = htons( 3010 );
+	    int s, r;
+	    char recv_buf[64];
+	    while(1){
+	        xEventGroupWaitBits(wifi_event_group,CONNECTED_BIT,false,true,portMAX_DELAY);
+	        s = socket(AF_INET, SOCK_STREAM, 0);
+	        if(s < 0) {
+	            ESP_LOGE(TAG, "... Failed to allocate socket.\n");
+	            vTaskDelay(1000 / portTICK_PERIOD_MS);
+	            continue;
+	        }
+	        ESP_LOGI(TAG, "... allocated socket\n");
+	         if(connect(s, (struct sockaddr *)&tcpServerAddr, sizeof(tcpServerAddr)) != 0) {
+	            ESP_LOGE(TAG, "... socket connect failed errno=%d \n", errno);
+	            close(s);
+	            vTaskDelay(4000 / portTICK_PERIOD_MS);
+	            continue;
+	        }
+	        ESP_LOGI(TAG, "... connected \n");
+	        if( write(s , MESSAGE , strlen(MESSAGE)) < 0)
+	        {
+	            ESP_LOGE(TAG, "... Send failed \n");
+	            close(s);
+	            vTaskDelay(4000 / portTICK_PERIOD_MS);
+	            continue;
+	        }
+	        ESP_LOGI(TAG, "... socket send success");
+	        do {
+	            bzero(recv_buf, sizeof(recv_buf));
+	            r = read(s, recv_buf, sizeof(recv_buf)-1);
+	            for(int i = 0; i < r; i++) {
+	                putchar(recv_buf[i]);
+	            }
+	        } while(r > 0);
+	        ESP_LOGI(TAG, "... done reading from socket. Last read return=%d errno=%d\r\n", r, errno);
+	        close(s);
+	        ESP_LOGI(TAG, "... new request in 5 seconds");
+	        vTaskDelay(5000 / portTICK_PERIOD_MS);
+	    }
+	    ESP_LOGI(TAG, "...tcp_client task closed\n");
 }
