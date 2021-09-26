@@ -26,9 +26,11 @@
    If you'd rather not, just change the below entries to strings with
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
-#define EXAMPLE_ESP_WIFI_SSID      "Home Network"
-#define EXAMPLE_ESP_WIFI_PASS      "ThanksBrendan!"
-#define EXAMPLE_ESP_MAXIMUM_RETRY  10
+#define EXAMPLE_ESP_WIFI_SSID      	"Home Network"
+#define EXAMPLE_ESP_WIFI_PASS      	"ThanksBrendan!"
+#define EXAMPLE_ESP_MAXIMUM_RETRY	10
+#define TCPServerIP					"192.168.0.105"
+#define MESSAGE "TEST MESSAGE. IF YOU SEE THIS... YAY!!!\n"
 
 /* FreeRTOS event group to signal when we are connected*/
 static EventGroupHandle_t s_wifi_event_group;
@@ -155,7 +157,7 @@ void Wifi_Interface::send(char *data)
 	    int s, r;
 	    char recv_buf[64];
 	    while(1){
-	        xEventGroupWaitBits(wifi_event_group,CONNECTED_BIT,false,true,portMAX_DELAY);
+	        xEventGroupWaitBits(s_wifi_event_group, WIFI_CONNECTED_BIT, false, true, portMAX_DELAY);
 	        s = socket(AF_INET, SOCK_STREAM, 0);
 	        if(s < 0) {
 	            ESP_LOGE(TAG, "... Failed to allocate socket.\n");
