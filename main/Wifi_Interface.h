@@ -22,23 +22,19 @@
 #define MAIN_WIFI_INTERFACE_H_
 
 
-//A class was avoided to avoid compilation issues
-//void event_handler
-//(
-//	void* arg,
-//	esp_event_base_t event_base,
-//	int32_t event_id,
-//	void* event_data
-//);
-//
-//void wifi_init_sta();
-//
-
 class Wifi_Interface
 {
+	private:
+		char ssid[64];
+		char password[64];
+		char tcp_ip[64];
+		int  tcp_port;
+
 	public:
-		Wifi_Interface();
+		Wifi_Interface(char *ssid, char *password);
+		void set_target(char *target_ip, char *port);
 		void send(char *data);
+		void recv(char*, int);
 };
 
 #endif /* MAIN_WIFI_INTERFACE_H_ */

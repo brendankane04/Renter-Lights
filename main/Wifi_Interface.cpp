@@ -68,7 +68,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
 	}
 }
 
-void wifi_init_sta(void)
+void wifi_init_sta(char *ssid, char *password)
 {
 	//Initialize NVS
 	esp_err_t ret = nvs_flash_init();
@@ -88,24 +88,37 @@ void wifi_init_sta(void)
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
 	ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
+	//Attach the event handler to the interrupts
 	esp_event_handler_instance_t instance_any_id;
 	esp_event_handler_instance_t instance_got_ip;
-	ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT,
-														ESP_EVENT_ANY_ID,
-														&event_handler,
-														NULL,
-														&instance_any_id));
-	ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
-														IP_EVENT_STA_GOT_IP,
-														&event_handler,
-														NULL,
-														&instance_got_ip));
+	ESP_ERROR_CHECK
+	(
+		esp_event_handler_instance_register
+		(
+			WIFI_EVENT,
+			ESP_EVENT_ANY_ID,
+			&event_handler,
+			NULL,
+			&instance_any_id
+		)
+	);
+	ESP_ERROR_CHECK
+	(
+		esp_event_handler_instance_register
+		(
+			IP_EVENT,
+			IP_EVENT_STA_GOT_IP,
+			&event_handler,
+			NULL,
+			&instance_got_ip
+		)
+	);
 
 
 	//Wifi config struct for SSID, password, auth mode, etc.
 	wifi_config_t wifi_config = {}; //Initialize to 0
-	strcpy((char*) wifi_config.sta.ssid, (char*) EXAMPLE_ESP_WIFI_SSID);
-	strcpy((char*) wifi_config.sta.password, (char*) EXAMPLE_ESP_WIFI_PASS);
+	strcpy((char*) wifi_config.sta.ssid, (char*) ssid);
+	strcpy((char*) wifi_config.sta.password, (char*) password);
 	wifi_config.sta.pmf_cfg.capable = true;
 	wifi_config.sta.pmf_cfg.required = false;
 
@@ -128,70 +141,133 @@ void wifi_init_sta(void)
 	 * happened. */
 	if (bits & WIFI_CONNECTED_BIT) {
 		ESP_LOGI(TAG, "connected to ap SSID:%s password:%s",
-				 EXAMPLE_ESP_WIFI_SSID, EXAMPLE_ESP_WIFI_PASS);
+				 ssid, password);
 	} else if (bits & WIFI_FAIL_BIT) {
 		ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s",
-				 EXAMPLE_ESP_WIFI_SSID, EXAMPLE_ESP_WIFI_PASS);
+				 ssid, password);
 	} else {
 		ESP_LOGE(TAG, "UNEXPECTED EVENT");
 	}
 
-	/* The event will not be processed after unregister */
-//	ESP_ERROR_CHECK(esp_event_handler_instance_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, instance_got_ip));
-//	ESP_ERROR_CHECK(esp_event_handler_instance_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, instance_any_id));
-//	vEventGroupDelete(s_wifi_event_group);
 }
 
-Wifi_Interface::Wifi_Interface()
+Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 {
+	//Copy the credentials of the wifi network
+	strcpy(this->ssid, ssid);
+	strcpy(this->password, password);
+
 	//Call to the reference code
-	wifi_init_sta();
+	wifi_init_sta(this->ssid, this->password);
 }
 
-void Wifi_Interface::send(char *data, char *target_ip)
+void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 {
+	strcpy(this->tcp_ip, tcp_ip);
+	this->tcp_port = tcp_port;
+
+}
+
+void Wifi_Interface::send(char *data)
+{
+	int send_socket;
 	ESP_LOGI(TAG_TCP,"tcp_client task started \n");
-	    struct sockaddr_in tcpServerAddr;
-	    tcpServerAddr.sin_addr.s_addr = inet_addr(TCPServerIP);
-	    tcpServerAddr.sin_family = AF_INET;
-	    tcpServerAddr.sin_port = htons(21);
-	    int s, r;
-	    char recv_buf[64];
-	    while(1){
-	        xEventGroupWaitBits(s_wifi_event_group, WIFI_CONNECTED_BIT, false, true, portMAX_DELAY);
-	        s = socket(AF_INET, SOCK_STREAM, 0);
-	        if(s < 0) {
-	            ESP_LOGE(TAG_TCP, "... Failed to allocate socket.\n");
-	            vTaskDelay(1000 / portTICK_PERIOD_MS);
-	            continue;
-	        }
-	        ESP_LOGI(TAG_TCP, "... allocated socket\n");
-	         if(connect(s, (struct sockaddr *)&tcpServerAddr, sizeof(tcpServerAddr)) != 0) {
-	            ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d \n", errno);
-	            close(s);
-	            vTaskDelay(4000 / portTICK_PERIOD_MS);
-	            continue;
-	        }
-	        ESP_LOGI(TAG_TCP, "... connected \n");
-	        if( write(s , MESSAGE , strlen(MESSAGE)) < 0)
-	        {
-	            ESP_LOGE(TAG_TCP, "... Send failed \n");
-	            close(s);
-	            vTaskDelay(4000 / portTICK_PERIOD_MS);
-	            continue;
-	        }
-	        ESP_LOGI(TAG_TCP, "... socket send success");
-	        do {
-	            bzero(recv_buf, sizeof(recv_buf));
-	            r = read(s, recv_buf, sizeof(recv_buf)-1);
-	            for(int i = 0; i < r; i++) {
-	                putchar(recv_buf[i]);
-	            }
-	        } while(r > 0);
-	        ESP_LOGI(TAG_TCP, "... done reading from socket. Last read return=%d errno=%d\r\n", r, errno);
-	        close(s);
-	        ESP_LOGI(TAG_TCP, "... new request in 5 seconds");
-	        vTaskDelay(5000 / portTICK_PERIOD_MS);
-	    }
-	    ESP_LOGI(TAG_TCP, "...tcp_client task closed\n");
+
+	//Initialize the socket address
+	struct sockaddr_in tcpServerAddr;
+	tcpServerAddr.sin_addr.s_addr = inet_addr(this->tcp_ip);
+	tcpServerAddr.sin_family = AF_INET;
+	tcpServerAddr.sin_port = htons(this->tcp_port);
+
+	//Repeat if there is an error
+	while(1)
+	{
+		//Ensure wifi is connected
+		xEventGroupWaitBits(s_wifi_event_group, WIFI_CONNECTED_BIT, false, true, portMAX_DELAY);
+
+		//Initialize the socket
+		send_socket = socket(AF_INET, SOCK_STREAM, 0);
+		if(send_socket < 0)
+		{
+			ESP_LOGE(TAG_TCP, "... Failed to allocate socket.\n");
+			vTaskDelay(1000 / portTICK_PERIOD_MS);
+			continue;
+		}
+		ESP_LOGI(TAG_TCP, "... allocated socket\n");
+
+		//Connect the socket
+		if(connect(send_socket, (struct sockaddr *)&tcpServerAddr, sizeof(tcpServerAddr)) != 0)
+		{
+			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d \n", errno);
+			close(send_socket);
+			vTaskDelay(4000 / portTICK_PERIOD_MS);
+			continue;
+		}
+		ESP_LOGI(TAG_TCP, "... connected \n");
+
+		//Write to the socket
+		if( write(send_socket , MESSAGE , strlen(MESSAGE)) < 0)
+		{
+			ESP_LOGE(TAG_TCP, "... Send failed \n");
+			close(send_socket);
+			vTaskDelay(4000 / portTICK_PERIOD_MS);
+			continue;
+		}
+		ESP_LOGI(TAG_TCP, "... socket send success");
+
+		//Close the socket
+		close(send_socket);
+		break;
+	}
+	ESP_LOGI(TAG_TCP, "...tcp_client task closed\n");
+}
+
+//Receive a number of bytes
+void Wifi_Interface::recv(char *recv_buf, int size)
+{
+	int recv_socket, recv_flag;
+	ESP_LOGI(TAG_TCP,"tcp_client task started \n");
+
+	//Initialize the socket address
+	struct sockaddr_in tcpServerAddr;
+	tcpServerAddr.sin_addr.s_addr = inet_addr(this->tcp_ip);
+	tcpServerAddr.sin_family = AF_INET;
+	tcpServerAddr.sin_port = htons(this->tcp_port);
+
+	//Repeat if there is an error
+	while(1)
+	{
+		//Ensure wifi is connected
+		xEventGroupWaitBits(s_wifi_event_group, WIFI_CONNECTED_BIT, false, true, portMAX_DELAY);
+
+		//Initialize the socket
+		recv_socket = socket(AF_INET, SOCK_STREAM, 0);
+		if(recv_socket < 0)
+		{
+			ESP_LOGE(TAG_TCP, "... Failed to allocate socket.\n");
+			vTaskDelay(1000 / portTICK_PERIOD_MS);
+			continue;
+		}
+		ESP_LOGI(TAG_TCP, "... allocated socket\n");
+
+		//Connect the socket
+		if(connect(recv_socket, (struct sockaddr *)&tcpServerAddr, sizeof(tcpServerAddr)) != 0)
+		{
+			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d \n", errno);
+			close(recv_socket);
+			vTaskDelay(4000 / portTICK_PERIOD_MS);
+			continue;
+		}
+		ESP_LOGI(TAG_TCP, "... connected \n");
+
+		//Read from the socket
+		bzero(recv_buf, size);
+		recv_flag = read(recv_socket, recv_buf, sizeof(recv_buf)-1);
+		ESP_LOGI(TAG_TCP, "... done reading from socket. Last read return=%d errno=%d\r\n", recv_flag, errno);
+
+		//Close the socket
+		close(recv_socket);
+		break;
+	}
+	ESP_LOGI(TAG_TCP, "...tcp_client task closed\n");
 }
