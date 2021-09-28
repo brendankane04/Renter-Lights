@@ -148,7 +148,7 @@ Wifi_Interface::Wifi_Interface()
 	wifi_init_sta();
 }
 
-void Wifi_Interface::send(char *data)
+void Wifi_Interface::send(char *data, char *target_ip)
 {
 	ESP_LOGI(TAG_TCP,"tcp_client task started \n");
 	    struct sockaddr_in tcpServerAddr;
