@@ -32,6 +32,7 @@ class Wifi_Interface
 
 	public:
 		Wifi_Interface(char *ssid, char *password);
+		Wifi_Interface(char *ssid, char* password, char *tcp_ip, int tcp_port);
 		void set_target(char*, int);
 		void send(char *data);
 		void recv(char*, int);
