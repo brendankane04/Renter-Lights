@@ -44,7 +44,7 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
-    Wifi_Interface wifi1("Home Network", "password");
+    Wifi_Interface wifi1("Home Network", "password", "192.168.1.155", 21);
 
     wifi1.send("TEST\n");
 

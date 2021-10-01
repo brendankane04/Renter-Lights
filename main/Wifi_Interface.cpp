@@ -161,6 +161,20 @@ Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 	wifi_init_sta(this->ssid, this->password);
 }
 
+Wifi_Interface::Wifi_Interface(char *ssid, char* password, char *tcp_ip, int tcp_port)
+{
+	//Copy the credentials of the wifi network
+	strcpy(this->ssid, ssid);
+	strcpy(this->password, password);
+
+	//Set the default target
+	set_target(tcp_ip, tcp_port);
+
+	//Call to the reference code
+	wifi_init_sta(this->ssid, this->password);
+}
+
+//Set the target port & ip
 void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 {
 	strcpy(this->tcp_ip, tcp_ip);
