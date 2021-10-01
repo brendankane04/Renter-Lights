@@ -25,16 +25,23 @@
 class Wifi_Interface
 {
 	private:
+		//Name of the wifi network
 		char ssid[64];
+		//Password to connect
 		char password[64];
 		char tcp_ip[64];
 		int  tcp_port;
 
 	public:
+		//Connect to a wifi network
 		Wifi_Interface(char *ssid, char *password);
+		//Connect to a wifi newtork & choose a default port
 		Wifi_Interface(char *ssid, char* password, char *tcp_ip, int tcp_port);
+		//Set the target device ip & port you're talking to
 		void set_target(char*, int);
+		//Send a message via TCP
 		void send(char *data);
+		//Receive a message via TCP, fills the 'recv_buf' with 'size' bytes
 		void recv(char*, int);
 };
 
