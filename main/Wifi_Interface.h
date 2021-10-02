@@ -29,7 +29,9 @@ class Wifi_Interface
 		char ssid[64];
 		//Password to connect
 		char password[64];
+		//IP address of current target in IPv4
 		char tcp_ip[64];
+		//Current target port
 		int  tcp_port;
 
 	public:
