@@ -26,11 +26,7 @@
    If you'd rather not, just change the below entries to strings with
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
-#define EXAMPLE_ESP_WIFI_SSID      	"Home Network"
-#define EXAMPLE_ESP_WIFI_PASS      	"ThanksBrendan!"
 #define EXAMPLE_ESP_MAXIMUM_RETRY	10
-#define TCPServerIP					"192.168.1.155"
-#define MESSAGE "TEST MESSAGE. IF YOU SEE THIS... YAY!!!\n"
 
 /* FreeRTOS event group to signal when we are connected*/
 static EventGroupHandle_t s_wifi_event_group;
@@ -78,13 +74,17 @@ void wifi_init_sta(char *ssid, char *password)
 	}
 	ESP_ERROR_CHECK(ret);
 
+	//Create the event group
 	s_wifi_event_group = xEventGroupCreate();
 
+	//Start the network interface
 	ESP_ERROR_CHECK(esp_netif_init());
 
+	//Start the event loop
 	ESP_ERROR_CHECK(esp_event_loop_create_default());
 	esp_netif_create_default_wifi_sta();
 
+	//Initialize the wifi module
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
 	ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
@@ -182,10 +182,10 @@ void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 
 }
 
-void Wifi_Interface::send(char *data)
+void Wifi_Interface::send(char *data, int len)
 {
 	int send_socket;
-	ESP_LOGI(TAG_TCP,"tcp_client task started \n");
+	ESP_LOGI(TAG_TCP,"tcp_client task started");
 
 	//Initialize the socket address
 	struct sockaddr_in tcpServerAddr;
@@ -203,26 +203,26 @@ void Wifi_Interface::send(char *data)
 		send_socket = socket(AF_INET, SOCK_STREAM, 0);
 		if(send_socket < 0)
 		{
-			ESP_LOGE(TAG_TCP, "... Failed to allocate socket.\n");
+			ESP_LOGE(TAG_TCP, "... Failed to allocate socket.");
 			vTaskDelay(1000 / portTICK_PERIOD_MS);
 			continue;
 		}
-		ESP_LOGI(TAG_TCP, "... allocated socket\n");
+		ESP_LOGI(TAG_TCP, "... allocated socket");
 
 		//Connect the socket
 		if(connect(send_socket, (struct sockaddr *)&tcpServerAddr, sizeof(tcpServerAddr)) != 0)
 		{
-			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d \n", errno);
+			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d", errno);
 			close(send_socket);
 			vTaskDelay(4000 / portTICK_PERIOD_MS);
 			continue;
 		}
-		ESP_LOGI(TAG_TCP, "... connected \n");
+		ESP_LOGI(TAG_TCP, "... connected");
 
 		//Write to the socket
-		if( write(send_socket , MESSAGE , strlen(MESSAGE)) < 0)
+		if( write(send_socket , data , len) < 0)
 		{
-			ESP_LOGE(TAG_TCP, "... Send failed \n");
+			ESP_LOGE(TAG_TCP, "... Send failed");
 			close(send_socket);
 			vTaskDelay(4000 / portTICK_PERIOD_MS);
 			continue;
@@ -233,14 +233,19 @@ void Wifi_Interface::send(char *data)
 		close(send_socket);
 		break;
 	}
-	ESP_LOGI(TAG_TCP, "...tcp_client task closed\n");
+	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
+}
+
+void Wifi_Interface::send_str(char *data)
+{
+	send(data, strlen(data));
 }
 
 //Receive a number of bytes
 void Wifi_Interface::recv(char *recv_buf, int size)
 {
 	int recv_socket, recv_flag;
-	ESP_LOGI(TAG_TCP,"tcp_client task started \n");
+	ESP_LOGI(TAG_TCP,"tcp_client task started");
 
 	//Initialize the socket address
 	struct sockaddr_in tcpServerAddr;
@@ -258,30 +263,30 @@ void Wifi_Interface::recv(char *recv_buf, int size)
 		recv_socket = socket(AF_INET, SOCK_STREAM, 0);
 		if(recv_socket < 0)
 		{
-			ESP_LOGE(TAG_TCP, "... Failed to allocate socket.\n");
+			ESP_LOGE(TAG_TCP, "... Failed to allocate socket.");
 			vTaskDelay(1000 / portTICK_PERIOD_MS);
 			continue;
 		}
-		ESP_LOGI(TAG_TCP, "... allocated socket\n");
+		ESP_LOGI(TAG_TCP, "... allocated socket");
 
 		//Connect the socket
 		if(connect(recv_socket, (struct sockaddr *)&tcpServerAddr, sizeof(tcpServerAddr)) != 0)
 		{
-			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d \n", errno);
+			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d", errno);
 			close(recv_socket);
 			vTaskDelay(4000 / portTICK_PERIOD_MS);
 			continue;
 		}
-		ESP_LOGI(TAG_TCP, "... connected \n");
+		ESP_LOGI(TAG_TCP, "... connected");
 
 		//Read from the socket
 		bzero(recv_buf, size);
 		recv_flag = read(recv_socket, recv_buf, sizeof(recv_buf)-1);
-		ESP_LOGI(TAG_TCP, "... done reading from socket. Last read return=%d errno=%d\r\n", recv_flag, errno);
+		ESP_LOGI(TAG_TCP, "... done reading from socket. Last read return=%d errno=%d", recv_flag, errno);
 
 		//Close the socket
 		close(recv_socket);
 		break;
 	}
-	ESP_LOGI(TAG_TCP, "...tcp_client task closed\n");
+	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
 }

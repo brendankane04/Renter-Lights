@@ -42,7 +42,9 @@ class Wifi_Interface
 		//Set the target device ip & port you're talking to
 		void set_target(char*, int);
 		//Send a message via TCP
-		void send(char *data);
+		void send(char *data, int len);
+		//Send a string via TCP
+		void send_str(char *data);
 		//Receive a message via TCP, fills the 'recv_buf' with 'size' bytes
 		void recv(char*, int);
 };
