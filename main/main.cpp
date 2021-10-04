@@ -48,6 +48,18 @@ void app_main(void)
 
     wifi1.send_str("TEST\n");
 
-    printf("Testing servo motor.......\n");
+    printf("Beginning probing sequence...\n");
+
+    //Poll for the status & send a signal when it's high
+    int status;
+    SR501 pir(GPIO_NUM_2);
+    while(1)
+    {
+    	status = pir.get_signal();
+    	if(status) 	wifi1.send_str("Someone entered the room.\n");
+    	else		wifi1.send_str("Someone left.\n");
+    	delay(2000);
+    }
+
 //    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);
 }
