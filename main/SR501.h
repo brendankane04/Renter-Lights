@@ -19,7 +19,9 @@ class SR501
 		//Determine the signal on the sensor
 		int get_signal();
 		//Signals if the room is now populated
+		int is_populated();
 		//Signals if the room is now empty
+		int is_unpopulated();
 };
 
 #endif
