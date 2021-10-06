@@ -14,6 +14,7 @@
 #define BLINK_GPIO GPIO_NUM_33
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
+static const char *TAG = "MAIN";
 
 extern "C" { void app_main(); }
 
@@ -48,7 +49,7 @@ void app_main(void)
 
     wifi1.send_str("TEST\n");
 
-    printf("Beginning probing sequence...\n");
+    ESP_LOGI(TAG, "Beginning probing sequence...\n");
 
     //Poll for the status & send a signal when it's high
     int status;
