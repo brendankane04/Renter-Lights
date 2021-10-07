@@ -18,8 +18,8 @@ class SR501
 		SR501(gpio_num_t);
 		//Determine the signal on the sensor
 		int get_signal();
-		//Signals if the room is now populated
-		int is_populated();
+		//Wait until someone is in the room
+		int wait_until_populated();
 		//Signals if the room is now empty
 		int is_unpopulated();
 };

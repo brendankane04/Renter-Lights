@@ -19,3 +19,11 @@ int SR501::get_signal()
 {
 	return gpio_get_level(pin);
 }
+
+int SR501::wait_until_populated()
+{
+	int populated = 0;
+
+
+	return populated
+}
