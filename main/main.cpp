@@ -45,22 +45,31 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
-    Wifi_Interface wifi1("Home Network", "ThanksBrendan!", "192.168.1.155", 21);
+    Wifi_Interface network = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    char buffer[32];
 
-    wifi1.send_str("TEST\n");
+    network.set_target("192.168.1.155", 21);
 
-    ESP_LOGI(TAG, "Beginning probing sequence...\n");
+    network.send_str("Changing Processing\n");
+
+    while(1)
+	{
+		network.recv(buffer, 32);
+		printf("buffer: %s\n", buffer);
+	}
+
+//    ESP_LOGI(TAG, "Beginning probing sequence...\n");
 
     //Poll for the status & send a signal when it's high
-    int status;
-    SR501 pir(GPIO_NUM_2);
-    while(1)
-    {
-    	status = pir.get_signal();
-    	if(status) 	wifi1.send_str("Someone entered the room.\n");
-    	else		wifi1.send_str("Someone left.\n");
-    	delay(2000);
-    }
+//    int status;
+//    SR501 pir(GPIO_NUM_2);
+//    while(1)
+//    {
+//    	status = pir.get_signal();
+//    	if(status) 	network.send_str("Someone entered the room.\n");
+//    	else		network.send_str("Someone left.\n");
+//    	delay(2000);
+//    }
 
 //    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);
 }

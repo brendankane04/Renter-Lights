@@ -151,24 +151,18 @@ void wifi_init_sta(char *ssid, char *password)
 
 }
 
+Wifi_Interface& Wifi_Interface::get_instance(char *ssid, char *password)
+{
+	static Wifi_Interface _global_interface(ssid, password);
+	ESP_LOGI(TAG, "Returning instance");
+	return _global_interface;
+}
+
 Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 {
 	//Copy the credentials of the wifi network
 	strcpy(this->ssid, ssid);
 	strcpy(this->password, password);
-
-	//Call to the reference code
-	wifi_init_sta(this->ssid, this->password);
-}
-
-Wifi_Interface::Wifi_Interface(char *ssid, char* password, char *tcp_ip, int tcp_port)
-{
-	//Copy the credentials of the wifi network
-	strcpy(this->ssid, ssid);
-	strcpy(this->password, password);
-
-	//Set the default target
-	set_target(tcp_ip, tcp_port);
 
 	//Call to the reference code
 	wifi_init_sta(this->ssid, this->password);
@@ -281,7 +275,7 @@ void Wifi_Interface::recv(char *recv_buf, int size)
 
 		//Read from the socket
 		bzero(recv_buf, size);
-		recv_flag = read(recv_socket, recv_buf, sizeof(recv_buf)-1);
+		recv_flag = read(recv_socket, recv_buf, size /*sizeof(recv_buf)*/);
 		ESP_LOGI(TAG_TCP, "... done reading from socket. Last read return=%d errno=%d", recv_flag, errno);
 
 		//Close the socket

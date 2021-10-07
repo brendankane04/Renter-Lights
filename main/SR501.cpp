@@ -25,5 +25,5 @@ int SR501::wait_until_populated()
 	int populated = 0;
 
 
-	return populated
+	return populated;
 }
