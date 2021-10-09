@@ -25,15 +25,21 @@ SR501::SR501(gpio_num_t pin)
     gpio_config(&input_io);
 }
 
-int SR501::get_signal()
+int SR501::get_signal(void *arg)
 {
 	return gpio_get_level(pin);
+}
+
+void poll_for_people(void *arg)
+{
+
 }
 
 int SR501::wait_until_populated()
 {
 	int populated = 0;
 
+    xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, NULL, 5, NULL);
 
-	return populated;
+    return populated;
 }
