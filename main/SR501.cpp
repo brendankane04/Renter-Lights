@@ -1,5 +1,15 @@
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "driver/gpio.h"
 #include "SR501.h"
+
+
+//Modified delay functions
+#define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
+#define delay_sec(sec) for(int i = 0; i < sec; i++) {delay(1000);}
+#define delay_min(min) for(int i = 0; i < min; i++) {delay_sec(60);}
+#define delay_hr(hour) for(int i = 0; i < hour; i++) {delay_min(60);}
+
 
 SR501::SR501(gpio_num_t pin)
 {
