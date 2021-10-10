@@ -25,14 +25,49 @@ SR501::SR501(gpio_num_t pin)
     gpio_config(&input_io);
 }
 
-int SR501::get_signal(void *arg)
+int SR501::get_signal()
 {
 	return gpio_get_level(pin);
 }
 
 void poll_for_people(void *arg)
 {
+	int status = 0;
+	int minutes_off = 0;
 
+	while(1)
+	{
+		//Get the current level on the PIR
+		status = get_signal();
+
+		if(status)
+		{//If it's high, set the status high & start the counter
+			if(!populated)
+			{//If transitioning from unpopulated to populated, send a signal
+				//TODO: implement a signal (interrupt on a freeRTOS level)
+			}
+			populated = true;
+			minutes_off = 0;
+			delay(100);
+			continue;
+		}
+		else
+		{//If it's low, wait a minute & decrement the counter
+			delay_min(1);
+			minutes_off++;
+		}
+
+		//If the counter reaches the maximum time, set the status to off
+		if(minutes_off >= 30)
+		{
+			if(populated)
+			{//If transitioning to from populated to unpopulated, send a signal
+				//TODO: implement a signal of person leaving
+			}
+			populated = 0;
+			minutes_off = 0;
+		}
+	}
 }
 
 int SR501::wait_until_populated()
