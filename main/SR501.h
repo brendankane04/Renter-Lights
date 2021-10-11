@@ -12,16 +12,18 @@ class SR501
 	private:
 		//The which the peripheral is connected to
 		gpio_num_t pin;
+		//Whether or not the sensor thinks the room is populated
+		int populated;
+		//The handler for the task which uses most of this class
+		friend void poll_for_people(void*);
 
 	public:
 		//Constructor
 		SR501(gpio_num_t);
 		//Determine the signal on the sensor
 		int get_signal();
-		//Wait until someone is in the room
-		int wait_until_populated();
-		//Signals if the room is now empty
-		int is_unpopulated();
+		//starts the task which reads in the signal
+		int init();
 };
 
 #endif

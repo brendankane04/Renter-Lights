@@ -1,6 +1,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#include "esp_log.h"
 #include "SR501.h"
 
 
@@ -35,18 +36,21 @@ void poll_for_people(void *arg)
 	int status = 0;
 	int minutes_off = 0;
 
+	//Get a version of the object which is running this task
+	SR501 *task_this = (SR501*) arg;
+
 	while(1)
 	{
 		//Get the current level on the PIR
-		status = get_signal();
+		status = task_this->get_signal();
 
 		if(status)
 		{//If it's high, set the status high & start the counter
-			if(!populated)
+			if(!task_this->populated)
 			{//If transitioning from unpopulated to populated, send a signal
 				//TODO: implement a signal (interrupt on a freeRTOS level)
 			}
-			populated = true;
+			task_this->populated = true;
 			minutes_off = 0;
 			delay(100);
 			continue;
@@ -60,21 +64,21 @@ void poll_for_people(void *arg)
 		//If the counter reaches the maximum time, set the status to off
 		if(minutes_off >= 30)
 		{
-			if(populated)
+			if(task_this->populated)
 			{//If transitioning to from populated to unpopulated, send a signal
 				//TODO: implement a signal of person leaving
 			}
-			populated = 0;
+			task_this->populated = 0;
 			minutes_off = 0;
 		}
 	}
 }
 
-int SR501::wait_until_populated()
+int SR501::init()
 {
-	int populated = 0;
+	this->populated = 0;
 
-    xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, NULL, 5, NULL);
+    xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, (void*) this, 5, NULL);
 
     return populated;
 }
