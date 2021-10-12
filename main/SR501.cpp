@@ -49,6 +49,7 @@ void poll_for_people(void *arg)
 			if(!task_this->populated)
 			{//If transitioning from unpopulated to populated, send a signal
 				//TODO: implement a signal (interrupt on a freeRTOS level)
+
 			}
 			task_this->populated = true;
 			minutes_off = 0;
