@@ -3,6 +3,7 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "SR501.h"
+#include "Wifi_Interface.h"
 
 
 //Modified delay functions
@@ -49,7 +50,8 @@ void poll_for_people(void *arg)
 			if(!task_this->populated)
 			{//If transitioning from unpopulated to populated, send a signal
 				//TODO: implement a signal (interrupt on a freeRTOS level)
-
+				Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+				wifi.send_str("Someone ENTERED the room.\n");
 			}
 			task_this->populated = true;
 			minutes_off = 0;
@@ -68,6 +70,8 @@ void poll_for_people(void *arg)
 			if(task_this->populated)
 			{//If transitioning to from populated to unpopulated, send a signal
 				//TODO: implement a signal of person leaving
+				Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+				wifi.send_str("Someone LEFT the room.\n");
 			}
 			task_this->populated = 0;
 			minutes_off = 0;

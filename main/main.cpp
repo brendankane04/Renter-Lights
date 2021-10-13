@@ -45,16 +45,16 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
-    global_interface = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     char buffer[32];
 
-    global_interface.set_target("192.168.1.155", 21);
+    wifi.set_target("192.168.1.155", 21);
 
-    global_interface.send_str("Changing Processing\n");
+    wifi.send_str("Changing Processing\n");
 
     while(1)
 	{
-		global_interface.recv(buffer, 32);
+		wifi.recv(buffer, 32);
 		printf("buffer: %s\n", buffer);
 	}
 
@@ -66,8 +66,8 @@ void app_main(void)
 //    while(1)
 //    {
 //    	status = pir.get_signal();
-//    	if(status) 	global_interface.send_str("Someone entered the room.\n");
-//    	else		global_interface.send_str("Someone left.\n");
+//    	if(status) 	wifi.send_str("Someone entered the room.\n");
+//    	else		wifi.send_str("Someone left.\n");
 //    	delay(2000);
 //    }
 
