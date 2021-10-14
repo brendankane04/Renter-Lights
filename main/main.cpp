@@ -46,17 +46,13 @@ void servo_control(void *arg)
 void app_main(void)
 {
     Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    SR501 pir(GPIO_NUM_2);
     char buffer[32];
 
     wifi.set_target("192.168.1.155", 21);
+    pir.init();
 
-    wifi.send_str("Changing Processing\n");
-
-    while(1)
-	{
-		wifi.recv(buffer, 32);
-		printf("buffer: %s\n", buffer);
-	}
+    wifi.send_str("Beginning Processing\n");
 
 //    ESP_LOGI(TAG, "Beginning probing sequence...\n");
 
