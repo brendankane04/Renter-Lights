@@ -52,7 +52,7 @@ void app_main(void)
     wifi.set_target("192.168.1.155", 21);
     pir.init();
 
-    wifi.send_str("Beginning Processing\n");
+    wifi.send("Beginning Processing\n");
 
 //    ESP_LOGI(TAG, "Beginning probing sequence...\n");
 

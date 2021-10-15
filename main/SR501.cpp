@@ -51,7 +51,7 @@ void poll_for_people(void *arg)
 			{//If transitioning from unpopulated to populated, send a signal
 				//TODO: implement a signal (interrupt on a freeRTOS level)
 				Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-				wifi.send_str("Someone ENTERED the room.\n");
+				wifi.send("Someone ENTERED the room.\n");
 			}
 			task_this->populated = true;
 			minutes_off = 0;
@@ -71,7 +71,7 @@ void poll_for_people(void *arg)
 			{//If transitioning to from populated to unpopulated, send a signal
 				//TODO: implement a signal of person leaving
 				Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-				wifi.send_str("Someone LEFT the room.\n");
+				wifi.send("Someone LEFT the room.\n");
 			}
 			task_this->populated = 0;
 			minutes_off = 0;

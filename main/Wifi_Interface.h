@@ -46,7 +46,7 @@ class Wifi_Interface
 		//Send a message via TCP
 		void send(char *data, int len);
 		//Send a string via TCP
-		void send_str(char *data);
+		void send(char *data);
 		//Receive a message via TCP, fills the 'recv_buf' with 'size' bytes
 		void recv(char*, int);
 };

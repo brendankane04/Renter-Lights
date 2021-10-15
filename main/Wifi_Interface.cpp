@@ -230,7 +230,7 @@ void Wifi_Interface::send(char *data, int len)
 	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
 }
 
-void Wifi_Interface::send_str(char *data)
+void Wifi_Interface::send(char *data)
 {
 	send(data, strlen(data));
 }
