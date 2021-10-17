@@ -282,5 +282,5 @@ void Wifi_Interface::recv(char *recv_buf, int size)
 		close(recv_socket);
 		break;
 	}
-	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
+	ESP_LOGI(TAG_TCP, "... tcp_client task closed");
 }
