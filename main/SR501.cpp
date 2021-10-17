@@ -37,7 +37,9 @@ void poll_for_people(void *arg)
 {
 	int status = 0;
 	int minutes_off = 0;
+	int sec_off = 0;
     Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    wifi.set_target("192.168.1.155", 21);
 
 	//Get a version of the object which is running this task
 	SR501 *task_this = (SR501*) arg;
@@ -46,27 +48,31 @@ void poll_for_people(void *arg)
 	{
 		//Get the current level on the PIR
 		status = task_this->get_signal();
-		wifi.send("SR501: Getting signal");
+		wifi.send("SR501: Getting signal\n");
 
 		if(status)
 		{//If it's high, set the status high & start the counter
-			wifi.send("SR501: The signal is high");
+			wifi.send("SR501: The signal is high\n");
 			if(!task_this->populated)
 			{//If transitioning from unpopulated to populated, send a signal
 				//TODO: implement a signal (interrupt on a freeRTOS level)
-//				Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
 				wifi.send("Someone ENTERED the room.\n");
 			}
 			task_this->populated = true;
 			minutes_off = 0;
+			sec_off = 0;
 			delay(100);
-			continue;
 		}
 		else
 		{//If it's low, wait a minute & decrement the counter
-			wifi.send("SR501: The signal is low");
-			delay_min(1);
-			minutes_off++;
+			wifi.send("SR501: The signal is low\n");
+			delay_sec(10);
+			sec_off += 10;
+			if(sec_off >= 60)
+			{
+				sec_off = 0;
+				minutes_off++;
+			}
 		}
 
 		//If the counter reaches the maximum time, set the status to off
@@ -75,7 +81,6 @@ void poll_for_people(void *arg)
 			if(task_this->populated)
 			{//If transitioning to from populated to unpopulated, send a signal
 				//TODO: implement a signal of person leaving
-//				Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
 				wifi.send("Someone LEFT the room.\n");
 			}
 			task_this->populated = 0;
