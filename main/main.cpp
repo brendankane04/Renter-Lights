@@ -54,6 +54,13 @@ void app_main(void)
 
     wifi.send("Beginning Processing\n");
 
+    while(1)
+    {
+    	int data = pir.get_signal();
+    	printf("data: %d", data);
+    	delay(1000);
+    }
+
 //    ESP_LOGI(TAG, "Beginning probing sequence...\n");
 
     //Poll for the status & send a signal when it's high
