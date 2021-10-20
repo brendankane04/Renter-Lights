@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_attr.h"
@@ -46,33 +47,19 @@ void servo_control(void *arg)
 void app_main(void)
 {
     Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-    SR501 pir(GPIO_NUM_2);
+    SR501 *pir = new SR501(GPIO_NUM_2);
     char buffer[32];
 
     wifi.set_target("192.168.1.155", 21);
-    pir.init();
+    pir->enable();
 
     wifi.send("Beginning Processing\n");
 
-    while(1)
-    {
-    	int data = pir.get_signal();
-    	printf("data: %d", data);
-    	delay(1000);
-    }
+    delay(10000);
 
-//    ESP_LOGI(TAG, "Beginning probing sequence...\n");
+    pir->disable();
 
-    //Poll for the status & send a signal when it's high
-//    int status;
-//    SR501 pir(GPIO_NUM_2);
-//    while(1)
-//    {
-//    	status = pir.get_signal();
-//    	if(status) 	wifi.send_str("Someone entered the room.\n");
-//    	else		wifi.send_str("Someone left.\n");
-//    	delay(2000);
-//    }
+    wifi.send("Ending Processing\n");
 
 //    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);
 }

@@ -14,6 +14,10 @@ class SR501
 		gpio_num_t pin;
 		//Whether or not the sensor thinks the room is populated
 		int populated;
+		//handler associated with each object
+		TaskHandle_t handle;
+
+
 		//The handler for the task which uses most of this class
 		friend void poll_for_people(void*);
 
@@ -23,7 +27,9 @@ class SR501
 		//Determine the signal on the sensor
 		int get_signal();
 		//starts the task which reads in the signal
-		int init();
+		int enable();
+		//ends the task which reads in the signal
+		void disable();
 };
 
 #endif

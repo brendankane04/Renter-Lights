@@ -16,7 +16,10 @@ static const char *TAG = "SR501";
 
 SR501::SR501(gpio_num_t pin)
 {
+	//Initialize the simple members
 	this->pin = pin;
+	this->populated = 0;
+	this->handle = NULL;
 
     //Initialize the input GPIO
     gpio_config_t input_io;
@@ -89,11 +92,19 @@ void poll_for_people(void *arg)
 	}
 }
 
-int SR501::init()
+int SR501::enable()
 {
-	this->populated = 0;
+	BaseType_t status;
+    status = xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, (void*) this, 5, &this->handle);
+    if(status == pdPASS)
+    	return 0;
+    else
+    	return -1;
+}
 
-    xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, (void*) this, 5, NULL);
-
-    return populated;
+void SR501::disable()
+{
+	//Only call the task if it won't delete the current task
+	if(this->handle != NULL)
+		vTaskDelete(this->handle);
 }
