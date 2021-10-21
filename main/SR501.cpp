@@ -69,8 +69,8 @@ void poll_for_people(void *arg)
 		else
 		{//If it's low, wait a minute & decrement the counter
 			wifi.send("SR501: The signal is low\n");
-			delay_sec(10);
-			sec_off += 10;
+			delay_sec(task_this->polling_delay);
+			sec_off += task_this->polling_delay;
 			if(sec_off >= 60)
 			{
 				sec_off = 0;

@@ -14,6 +14,8 @@ class SR501
 		gpio_num_t pin;
 		//Whether or not the sensor thinks the room is populated
 		int populated;
+		//Polling delay for scanning in the detection loop in seconds
+		const int polling_delay = 2;
 		//handler associated with each object
 		TaskHandle_t handle;
 
