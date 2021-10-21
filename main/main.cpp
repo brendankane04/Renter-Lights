@@ -20,12 +20,14 @@ static const char *TAG = "MAIN";
 extern "C" { void app_main(); }
 
 
-void servo_control(void *arg)
+void scan_room(void *arg)
 {
-    int status = 0, pos = 0;
+    Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    wifi.set_target("192.168.1.155", 21);
+    SR501 *pir = new SR501(GPIO_NUM_2);
+	int status = 0, pos = 0;
 
-    //Servo controlling the lights
-    SG90 servo(GPIO_NUM_15);
+	//Connect to the sensor
     SR501 pir(GPIO_NUM_2);
 
 
@@ -46,20 +48,5 @@ void servo_control(void *arg)
 
 void app_main(void)
 {
-    Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-    SR501 *pir = new SR501(GPIO_NUM_2);
-    char buffer[32];
-
-    wifi.set_target("192.168.1.155", 21);
-    pir->enable();
-
-    wifi.send("Beginning Processing\n");
-
-    delay(10000);
-
-    pir->disable();
-
-    wifi.send("Ending Processing\n");
-
-//    xTaskCreate(servo_control, "mcpwm_example_servo_control", 4096, NULL, 5, NULL);
+    xTaskCreate(sense_room, "Scan the room for people with the sensor", 4096, NULL, 5, NULL);
 }
