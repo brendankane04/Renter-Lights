@@ -51,15 +51,16 @@ void poll_for_people(void *arg)
 	{
 		//Get the current level on the PIR
 		status = task_this->get_signal();
-		wifi.send("SR501: Getting signal\n");
+
+		//Line for debugging
+//		wifi.send("SR501: Getting signal\n");
 
 		if(status)
 		{//If it's high, set the status high & start the counter
-			wifi.send("SR501: The signal is high\n");
 			if(!task_this->populated)
 			{//If transitioning from unpopulated to populated, send a signal
 				//TODO: implement a signal (interrupt on a freeRTOS level)
-				wifi.send("Someone ENTERED the room.\n");
+				wifi.send("PIR_ENTERED\n");
 			}
 			task_this->populated = true;
 			minutes_off = 0;
@@ -68,7 +69,6 @@ void poll_for_people(void *arg)
 		}
 		else
 		{//If it's low, wait a minute & decrement the counter
-			wifi.send("SR501: The signal is low\n");
 			delay_sec(task_this->polling_delay);
 			sec_off += task_this->polling_delay;
 			if(sec_off >= 60)
@@ -84,7 +84,7 @@ void poll_for_people(void *arg)
 			if(task_this->populated)
 			{//If transitioning to from populated to unpopulated, send a signal
 				//TODO: implement a signal of person leaving
-				wifi.send("Someone LEFT the room.\n");
+				wifi.send("PIR_EXITED\n");
 			}
 			task_this->populated = 0;
 			minutes_off = 0;
