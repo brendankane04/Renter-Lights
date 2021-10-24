@@ -19,9 +19,9 @@ class SR501
 		//handler associated with each object
 		TaskHandle_t handle;
 
-
 		//The handler for the task which uses most of this class
 		friend void poll_for_people(void*);
+
 
 	public:
 		//Constructor

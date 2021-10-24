@@ -14,6 +14,7 @@
 
 static const char *TAG = "SR501";
 
+
 SR501::SR501(gpio_num_t pin)
 {
 	//Initialize the simple members
@@ -31,10 +32,12 @@ SR501::SR501(gpio_num_t pin)
     gpio_config(&input_io);
 }
 
+
 int SR501::get_signal()
 {
 	return gpio_get_level(pin);
 }
+
 
 void poll_for_people(void *arg)
 {
@@ -92,6 +95,7 @@ void poll_for_people(void *arg)
 	}
 }
 
+
 int SR501::enable()
 {
 	BaseType_t status;
@@ -101,6 +105,7 @@ int SR501::enable()
     else
     	return -1;
 }
+
 
 void SR501::disable()
 {

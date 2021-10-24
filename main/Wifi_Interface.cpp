@@ -42,6 +42,7 @@ static const char *TAG_TCP = "TCP Client";
 
 static int s_retry_num = 0;
 
+
 static void event_handler(void* arg, esp_event_base_t event_base,
 								int32_t event_id, void* event_data)
 {
@@ -63,6 +64,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
 		xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
 	}
 }
+
 
 void wifi_init_sta(char *ssid, char *password)
 {
@@ -151,12 +153,14 @@ void wifi_init_sta(char *ssid, char *password)
 
 }
 
+
 Wifi_Interface& Wifi_Interface::get_instance(char *ssid, char *password)
 {
 	static Wifi_Interface _global_interface(ssid, password);
 	ESP_LOGI(TAG, "Returning instance");
 	return _global_interface;
 }
+
 
 Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 {
@@ -168,13 +172,14 @@ Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 	wifi_init_sta(this->ssid, this->password);
 }
 
-//Set the target port & ip
+
 void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 {
 	strcpy(this->tcp_ip, tcp_ip);
 	this->tcp_port = tcp_port;
 
 }
+
 
 void Wifi_Interface::send(char *data, int len)
 {
@@ -230,12 +235,13 @@ void Wifi_Interface::send(char *data, int len)
 	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
 }
 
+
 void Wifi_Interface::send(char *data)
 {
 	send(data, strlen(data));
 }
 
-//Receive a number of bytes
+
 void Wifi_Interface::recv(char *recv_buf, int size)
 {
 	int recv_socket, recv_flag;

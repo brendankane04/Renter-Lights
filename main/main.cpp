@@ -19,8 +19,12 @@ static const char *TAG = "MAIN";
 
 extern "C" { void app_main(); }
 
+
 void app_main(void)
 {
 	SR501 *pir = new SR501(GPIO_NUM_2);
+	esp_event_loop_handle_t loop_handle;
+
+
 	pir->enable();
 }
