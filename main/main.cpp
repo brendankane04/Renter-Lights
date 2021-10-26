@@ -15,7 +15,7 @@
 #define BLINK_GPIO GPIO_NUM_33
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
-static const char *TAG = "MAIN";
+static const char *TAG = "main";
 extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
 
 enum
@@ -28,9 +28,10 @@ extern "C" { void app_main(); }
 
 
 //Send signals to the network based on the input
-void signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
+void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
     // Event handler logic
+	ESP_LOGI(TAG, "The handler was called.");
 }
 
 
@@ -49,8 +50,13 @@ void app_main(void)
 		.task_core_id = NULL
 	};
 
+	ESP_LOGI(TAG, "Beginning loop setup");
+
 	ESP_ERROR_CHECK(esp_event_loop_create(&loop_args, loop_handle));
-	ESP_ERROR_CHECK(esp_event_handler_register_with(loop_handle, PIR_EVENT, ESP_EVENT_ANY_ID, signal_handler, NULL));
+	ESP_ERROR_CHECK(esp_event_handler_instance_register_with(*loop_handle, PIR_EVENT, ESP_EVENT_ANY_ID, populated_signal_handler, NULL, NULL));
+	ESP_ERROR_CHECK(esp_event_post_to(*loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, 0, 1000));
+
+	ESP_LOGI(TAG, "Ending loop setup");
 
 //	pir->enable();
 }
