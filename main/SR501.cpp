@@ -20,7 +20,17 @@ SR501::SR501(gpio_num_t pin)
 	//Initialize the simple members
 	this->pin = pin;
 	this->populated = 0;
-	this->handle = NULL;
+	this->handle = new esp_event_loop_handle_t;
+	this->instance = new esp_event_handler_instance_t;
+
+	esp_event_loop_args_t loop_args =
+	{
+		.queue_size = 4,
+		.task_name = "sensor event loop",
+		.task_priority = 5,
+		.task_stack_size = 2048,
+		.task_core_id = NULL
+	};
 
     //Initialize the input GPIO
     gpio_config_t input_io;

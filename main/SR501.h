@@ -17,7 +17,9 @@ class SR501
 		//Polling delay for scanning in the detection loop in seconds
 		const int polling_delay = 2;
 		//handler associated with each object
-		TaskHandle_t handle;
+		esp_event_loop_handle_t *handle;
+		//handler instance associated with the object
+		esp_event_handler_instance_t *instance;
 
 		//The handler for the task which uses most of this class
 		friend void poll_for_people(void*);
