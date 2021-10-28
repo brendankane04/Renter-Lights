@@ -3,6 +3,17 @@
 
 
 #include "driver/gpio.h"
+#include "esp_event.h"
+
+
+//Defines for the event loop
+extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
+
+enum
+{
+	PIR_EVENT_ENTERED_ROOM,
+	PIR_EVENT_EXITED_ROOM
+};
 
 
 //Driver for the SR501 PIR sensor
@@ -17,9 +28,13 @@ class SR501
 		//Polling delay for scanning in the detection loop in seconds
 		const int polling_delay = 2;
 		//handler associated with each object
-		esp_event_loop_handle_t *handle;
-		//handler instance associated with the object
-		esp_event_handler_instance_t *instance;
+		TaskHandle_t handle;
+		//Handler for the external event loop
+		esp_event_loop_handle_t event_loop_handle;
+		//Instance for the external event loop
+		esp_event_handler_instance_t event_loop_instance;
+		//Function run by the event loop
+		esp_event_handler_t external_function;
 
 		//The handler for the task which uses most of this class
 		friend void poll_for_people(void*);

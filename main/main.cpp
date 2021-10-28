@@ -16,17 +16,18 @@
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
 static const char *TAG = "main";
-extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
 
-enum
-{
-	PIR_EVENT_ENTERED_ROOM,
-	PIR_EVENT_EXITED_ROOM
-};
+
+//extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
+//
+//enum
+//{
+//	PIR_EVENT_ENTERED_ROOM,
+//	PIR_EVENT_EXITED_ROOM
+//};
+
 
 extern "C" { void app_main(); }
-
-
 
 
 //Send signals to the network based on the input
