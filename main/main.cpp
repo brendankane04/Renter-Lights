@@ -26,6 +26,7 @@ static const char *TAG = "main";
 //	PIR_EVENT_EXITED_ROOM
 //};
 
+//static Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
 
 extern "C" { void app_main(); }
 
@@ -33,8 +34,6 @@ extern "C" { void app_main(); }
 //Send signals to the network based on the input
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
-//	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-//    wifi.set_target("192.168.1.155", 21);
 	switch(id)
 	{
 		case PIR_EVENT_ENTERED_ROOM:
@@ -59,12 +58,14 @@ void app_main(void)
 	esp_event_loop_handle_t *loop_handle = new esp_event_loop_handle_t;
 	esp_event_handler_instance_t *handler_instance = new esp_event_handler_instance_t;
 
+//    wifi.set_target("192.168.1.155", 21);
+
 	esp_event_loop_args_t loop_args =
 	{
 		.queue_size = 4,
 		.task_name = "Sensor to wifi event loop",
 		.task_priority = 5,
-		.task_stack_size = 2048,
+		.task_stack_size = 4096,
 		.task_core_id = NULL
 	};
 
