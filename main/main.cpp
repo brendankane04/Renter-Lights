@@ -60,9 +60,6 @@ void app_main(void)
 	esp_event_loop_handle_t *loop_handle = new esp_event_loop_handle_t;
 	esp_event_handler_instance_t *handler_instance = new esp_event_handler_instance_t;
 
-//	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-//    wifi.set_target("192.168.1.155", 21);
-
 	esp_event_loop_args_t loop_args =
 	{
 		.queue_size = 4,
