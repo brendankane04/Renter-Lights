@@ -34,15 +34,17 @@ extern "C" { void app_main(); }
 //Send signals to the network based on the input
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
+	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    wifi.set_target("192.168.1.155", 21);
 	switch(id)
 	{
 		case PIR_EVENT_ENTERED_ROOM:
 			ESP_LOGI(TAG, "PIR_ENTERED");
-//			wifi.send("PIR_ENTERED");
+			wifi.send("PIR_ENTERED\n");
 			break;
 		case PIR_EVENT_EXITED_ROOM:
 			ESP_LOGI(TAG, "PIR_EXITED");
-//			wifi.send("PIR_EXITED");
+			wifi.send("PIR_EXITED\n");
 			break;
 		default:
 			ESP_LOGI(TAG, "PIR_UNDEFINED");
@@ -90,24 +92,24 @@ void app_main(void)
 	));
 
 	//Event posting
-//	ESP_ERROR_CHECK(esp_event_post_to
-//	(
-//		*loop_handle,
-//		PIR_EVENT,
-//		PIR_EVENT_ENTERED_ROOM,
-//		NULL,
-//		0,
-//		1000
-//	));
-//	ESP_ERROR_CHECK(esp_event_post_to
-//	(
-//		*loop_handle,
-//		PIR_EVENT,
-//		PIR_EVENT_EXITED_ROOM,
-//		NULL,
-//		0,
-//		1000
-//	));
+	ESP_ERROR_CHECK(esp_event_post_to
+	(
+		*loop_handle,
+		PIR_EVENT,
+		PIR_EVENT_ENTERED_ROOM,
+		NULL,
+		0,
+		1000
+	));
+	ESP_ERROR_CHECK(esp_event_post_to
+	(
+		*loop_handle,
+		PIR_EVENT,
+		PIR_EVENT_EXITED_ROOM,
+		NULL,
+		0,
+		1000
+	));
 
 	//Event loop cleanup
 	ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with

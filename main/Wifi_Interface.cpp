@@ -30,7 +30,7 @@
 
 /* FreeRTOS event group to signal when we are connected*/
 static EventGroupHandle_t s_wifi_event_group;
-SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
+SemaphoreHandle_t mutex = NULL;
 
 /* The event group allows multiple bits for each event, but we only care about two events:
  * - we are connected to the AP with an IP
@@ -169,6 +169,9 @@ Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 	strcpy(this->ssid, ssid);
 	strcpy(this->password, password);
 
+	//Set up the mutex
+	mutex = xSemaphoreCreateMutex();
+
 	//Call to the reference code
 	wifi_init_sta(this->ssid, this->password);
 }
@@ -176,14 +179,20 @@ Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 
 void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 {
+	if(xSemaphoreTake(mutex, (TickType_t) 100) != pdTRUE)
+		return;
+
 	strcpy(this->tcp_ip, tcp_ip);
 	this->tcp_port = tcp_port;
 
+	xSemaphoreGive(mutex);
 }
 
 
 void Wifi_Interface::send(char *data, int len)
 {
+	if(xSemaphoreTake(mutex, (TickType_t) 100) != pdTRUE)
+		return;
 	int send_socket;
 	ESP_LOGI(TAG_TCP,"tcp_client task started");
 
@@ -234,6 +243,7 @@ void Wifi_Interface::send(char *data, int len)
 		break;
 	}
 	ESP_LOGI(TAG_TCP, "...tcp_client task closed");
+	xSemaphoreGive(mutex);
 }
 
 
