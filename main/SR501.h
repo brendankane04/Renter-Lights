@@ -7,7 +7,8 @@
 
 
 //Defines for the event loop
-extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
+//extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
+ESP_EVENT_DEFINE_BASE(PIR_EVENT)
 
 enum
 {
@@ -34,7 +35,7 @@ class SR501
 		//Instance for the external event loop
 		esp_event_handler_instance_t event_loop_instance;
 		//Function run by the event loop
-		esp_event_handler_t external_function;
+		esp_event_handler_t external_handler;
 
 		//The handler for the task which uses most of this class
 		friend void poll_for_people(void*);

@@ -21,8 +21,8 @@ SR501::SR501(gpio_num_t pin, esp_event_handler_t external_handler)
 	this->pin = pin;
 	this->populated = 0;
 	this->handle = NULL;
-	this->event_loop_handle = = new esp_event_loop_handle_t;
-	this->event_loop_instance = esp_event_handler_instance_t;
+	this->event_loop_handle = new esp_event_loop_handle_t;
+	this->event_loop_instance = new esp_event_handler_instance_t;
 
 	esp_event_loop_args_t loop_args =
 	{
