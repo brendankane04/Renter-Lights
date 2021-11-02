@@ -7,10 +7,10 @@
 
 
 //Defines for the event loop
-//extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
-ESP_EVENT_DEFINE_BASE(PIR_EVENT)
+static esp_event_base_t PIR_EVENT = "PIR_EVENT";
+//ESP_EVENT_DEFINE_BASE(PIR_EVENT);
 
-enum
+typedef enum
 {
 	PIR_EVENT_ENTERED_ROOM,
 	PIR_EVENT_EXITED_ROOM

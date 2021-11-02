@@ -67,7 +67,7 @@ void poll_for_people(void *arg)
 		status = task_this->get_signal();
 
 		//Line for debugging
-//		wifi.send("SR501: Getting signal\n");
+		wifi.send("SR501: Getting signal\n");
 
 		if(status)
 		{//If it's high, set the status high & start the counter
@@ -120,21 +120,21 @@ int SR501::enable()
 		.task_core_id = NULL
 	};
 
-	//Event loop setup
-	ESP_ERROR_CHECK(esp_event_loop_create
-	(
-		&loop_args,
-		&this->event_loop_handle
-	));
-	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
-	(
-		event_loop_handle,
-		PIR_EVENT,
-		ESP_EVENT_ANY_ID,
-		this->external_handler,
-		NULL,
-		&this->event_loop_instance
-	));
+//	//Event loop setup
+//	ESP_ERROR_CHECK(esp_event_loop_create
+//	(
+//		&loop_args,
+//		&this->event_loop_handle
+//	));
+//	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
+//	(
+//		event_loop_handle,
+//		PIR_EVENT,
+//		ESP_EVENT_ANY_ID,
+//		this->external_handler,
+//		NULL,
+//		&this->event_loop_instance
+//	));
 
     status = xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, (void*) this, 5, &this->handle);
     if(status == pdPASS)
@@ -149,18 +149,18 @@ void SR501::disable()
 	//Only call the task if it won't delete the current task
 	if(this->handle != NULL)
 	{
-		//unregister & delete the event loop
-		ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
-		(
-			event_loop_handle,
-			PIR_EVENT,
-			ESP_EVENT_ANY_ID,
-			this->event_loop_instance
-		));
-		ESP_ERROR_CHECK(esp_event_loop_delete
-		(
-			this->event_loop_handle
-		));
+//		//unregister & delete the event loop
+//		ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
+//		(
+//			event_loop_handle,
+//			PIR_EVENT,
+//			ESP_EVENT_ANY_ID,
+//			this->event_loop_instance
+//		));
+//		ESP_ERROR_CHECK(esp_event_loop_delete
+//		(
+//			this->event_loop_handle
+//		));
 
 		//Delete the the task
 		vTaskDelete(this->handle);

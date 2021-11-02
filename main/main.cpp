@@ -18,6 +18,17 @@
 static const char *TAG = "main";
 
 
+////Defines for the event loop
+//extern esp_event_base_t PIR_EVENT = "PIR_EVENT";
+////ESP_EVENT_DEFINE_BASE(PIR_EVENT);
+//
+//typedef enum
+//{
+//	PIR_EVENT_ENTERED_ROOM,
+//	PIR_EVENT_EXITED_ROOM
+//} pir_event_t;
+
+
 extern "C" { void app_main(); }
 
 
