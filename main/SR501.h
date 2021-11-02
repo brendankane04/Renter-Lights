@@ -42,7 +42,7 @@ class SR501
 
 	public:
 		//Constructor
-		SR501(gpio_num_t);
+		SR501(gpio_num_t, esp_event_handler_t);
 		//Determine the signal on the sensor
 		int get_signal();
 		//starts the task which reads in the signal

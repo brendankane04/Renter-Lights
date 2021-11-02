@@ -15,14 +15,23 @@
 static const char *TAG = "SR501";
 
 
-SR501::SR501(gpio_num_t pin)
+SR501::SR501(gpio_num_t pin, esp_event_handler_t external_handler)
 {
 	//Initialize the simple members
 	this->pin = pin;
 	this->populated = 0;
 	this->handle = NULL;
-	this->event_loop_handle = NULL;
-	this->event_loop_instance = NULL;
+	this->event_loop_handle = = new esp_event_loop_handle_t;
+	this->event_loop_instance = esp_event_handler_instance_t;
+
+	esp_event_loop_args_t loop_args =
+	{
+		.queue_size = 4,
+		.task_name = "Sensor to wifi event loop",
+		.task_priority = 5,
+		.task_stack_size = 4096,
+		.task_core_id = NULL
+	};
 
     //Initialize the input GPIO
     gpio_config_t input_io;
@@ -107,12 +116,25 @@ int SR501::enable()
 		.queue_size = 4,
 		.task_name = "Sensor to wifi event loop",
 		.task_priority = 5,
-		.task_stack_size = 2048,
+		.task_stack_size = 4096,
 		.task_core_id = NULL
 	};
+
 	//Event loop setup
-	ESP_ERROR_CHECK(esp_event_loop_create(&loop_args, &this->event_loop_handle));
-	ESP_ERROR_CHECK(esp_event_handler_instance_register_with(event_loop_handle, PIR_EVENT, ESP_EVENT_ANY_ID, this->external_function, NULL, &this->event_loop_instance));
+	ESP_ERROR_CHECK(esp_event_loop_create
+	(
+		&loop_args,
+		&this->event_loop_handle
+	));
+	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
+	(
+		event_loop_handle,
+		PIR_EVENT,
+		ESP_EVENT_ANY_ID,
+		this->external_handler,
+		NULL,
+		&this->event_loop_instance
+	));
 
     status = xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, (void*) this, 5, &this->handle);
     if(status == pdPASS)
@@ -128,8 +150,17 @@ void SR501::disable()
 	if(this->handle != NULL)
 	{
 		//unregister & delete the event loop
-		ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with(event_loop_handle, PIR_EVENT, ESP_EVENT_ANY_ID, this->event_loop_instance));
-		ESP_ERROR_CHECK(esp_event_loop_delete(this->event_loop_handle));
+		ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
+		(
+			event_loop_handle,
+			PIR_EVENT,
+			ESP_EVENT_ANY_ID,
+			this->event_loop_instance
+		));
+		ESP_ERROR_CHECK(esp_event_loop_delete
+		(
+			this->event_loop_handle
+		));
 
 		//Delete the the task
 		vTaskDelete(this->handle);

@@ -169,22 +169,6 @@ Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 	strcpy(this->ssid, ssid);
 	strcpy(this->password, password);
 
-	//Event loop setup
-	ESP_ERROR_CHECK(esp_event_loop_create
-	(
-		&loop_args,
-		loop_handle
-	));
-	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
-	(
-		*loop_handle,
-		PIR_EVENT,
-		ESP_EVENT_ANY_ID,
-		populated_signal_handler,
-		NULL,
-		handler_instance
-	));
-
 	//Set up the mutex
 	mutex = xSemaphoreCreateMutex();
 
