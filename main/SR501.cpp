@@ -67,7 +67,10 @@ void poll_for_people(void *arg)
 		status = task_this->get_signal();
 
 		//Line for debugging
-		wifi.send("SR501: Getting signal\n");
+		if(!status)
+			wifi.send("SR501: Getting signal: LOW \n");
+		else
+			wifi.send("SR501: Getting signal: HIGH\n");
 
 		if(status)
 		{//If it's high, set the status high & start the counter
