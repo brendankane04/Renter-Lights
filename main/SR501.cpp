@@ -56,8 +56,6 @@ void poll_for_people(void *arg)
 	int status = 0;
 	int minutes_off = 0;
 	int sec_off = 0;
-//    Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-//    wifi.set_target("192.168.1.155", 21);
 
 	//Get a version of the object which is running this task
 	SR501 *task_this = (SR501*) arg;
@@ -71,16 +69,11 @@ void poll_for_people(void *arg)
 		ESP_LOGI(TAG, "Getting signal...");
 //		if(!status) wifi.send("SR501: Getting signal: LOW \n");
 //		else		wifi.send("SR501: Getting signal: HIGH\n");
-		ESP_LOGI(TAG, "Calling entered interrupt...");
-//		esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, (size_t) 0, 100);
-		task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
 
 		if(status)
 		{//If it's high, set the status high & start the counter
 			if(!task_this->populated)
 			{//If transitioning from unpopulated to populated, send a signal
-				//TODO: implement a signal (interrupt on a freeRTOS level)
-//				wifi.send("PIR_ENTERED\n");
 				ESP_LOGI(TAG, "ENTERED");
 //				esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, (size_t) 0, 100);
 				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
@@ -106,8 +99,6 @@ void poll_for_people(void *arg)
 		{
 			if(task_this->populated)
 			{//If transitioning to from populated to unpopulated, send a signal
-				//TODO: implement a signal of person leaving
-//				wifi.send("PIR_EXITED\n");
 				ESP_LOGI(TAG, "EXITED");
 //				esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL, (size_t) 0, 100);
 				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL);
