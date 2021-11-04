@@ -6,6 +6,8 @@
 #include "esp_event.h"
 
 
+typedef void (*external_handler_t)(void*, esp_event_base_t, int32_t, void*);
+
 //Defines for the event loop
 static esp_event_base_t PIR_EVENT = "PIR_EVENT";
 //ESP_EVENT_DEFINE_BASE(PIR_EVENT);
@@ -35,7 +37,7 @@ class SR501
 		//Instance for the external event loop
 		esp_event_handler_instance_t event_loop_instance;
 		//Function run by the event loop
-		esp_event_handler_t external_handler;
+		external_handler_t external_handler;
 
 		//The handler for the task which uses most of this class
 		friend void poll_for_people(void*);
@@ -43,7 +45,7 @@ class SR501
 
 	public:
 		//Constructor
-		SR501(gpio_num_t, esp_event_handler_t);
+		SR501(gpio_num_t, external_handler_t);
 		//Determine the signal on the sensor
 		int get_signal();
 		//starts the task which reads in the signal

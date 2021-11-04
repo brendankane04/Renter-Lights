@@ -32,7 +32,6 @@ static const char *TAG = "main";
 extern "C" { void app_main(); }
 
 
-typedef void (*callback_function)(void*, esp_event_base_t, int32_t, void*);
 
 
 //Send signals to the network based on the input
@@ -63,72 +62,71 @@ void app_main(void)
 {
 	ESP_LOGI(TAG, "Beginning loop setup");
 
-//	SR501 *pir = new SR501(GPIO_NUM_2, populated_signal_handler);
-//	pir->enable();
+	SR501 *pir = new SR501(GPIO_NUM_2, populated_signal_handler);
+	pir->enable();
 
 
-	esp_event_loop_handle_t *loop_handle = new esp_event_loop_handle_t;
-	esp_event_handler_instance_t *handler_instance = new esp_event_handler_instance_t;
-
-	esp_event_loop_args_t loop_args =
-	{
-		.queue_size = 4,
-		.task_name = "Sensor to wifi event loop",
-		.task_priority = 5,
-		.task_stack_size = 4096,
-		.task_core_id = NULL
-	};
-
-
-
-	//Event loop setup
-	ESP_ERROR_CHECK(esp_event_loop_create
-	(
-		&loop_args,
-		loop_handle
-	));
-	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
-	(
-		*loop_handle,
-		PIR_EVENT,
-		ESP_EVENT_ANY_ID,
-		populated_signal_handler,
-		NULL,
-		handler_instance
-	));
-
-	//Event posting
-	ESP_ERROR_CHECK(esp_event_post_to
-	(
-		*loop_handle,
-		PIR_EVENT,
-		PIR_EVENT_ENTERED_ROOM,
-		NULL,
-		0,
-		1000
-	));
-	ESP_ERROR_CHECK(esp_event_post_to
-	(
-		*loop_handle,
-		PIR_EVENT,
-		PIR_EVENT_EXITED_ROOM,
-		NULL,
-		0,
-		1000
-	));
-
-	//Event loop cleanup
-	ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
-	(
-		*loop_handle,
-		PIR_EVENT,
-		ESP_EVENT_ANY_ID,
-		*handler_instance
-	));
-	ESP_ERROR_CHECK(esp_event_loop_delete
-	(
-		*loop_handle
-	));
-
-	ESP_LOGI(TAG, "Ending loop setup");
+//	esp_event_loop_handle_t *loop_handle = new esp_event_loop_handle_t;
+//	esp_event_handler_instance_t *handler_instance = new esp_event_handler_instance_t;
+//
+//	esp_event_loop_args_t loop_args =
+//	{
+//		.queue_size = 4,
+//		.task_name = "Sensor to wifi event loop",
+//		.task_priority = 5,
+//		.task_stack_size = 4096,
+//		.task_core_id = NULL
+//	};
+//
+//
+//	//Event loop setup
+//	ESP_ERROR_CHECK(esp_event_loop_create
+//	(
+//		&loop_args,
+//		loop_handle
+//	));
+//	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
+//	(
+//		*loop_handle,
+//		PIR_EVENT,
+//		ESP_EVENT_ANY_ID,
+//		populated_signal_handler,
+//		NULL,
+//		handler_instance
+//	));
+//
+//	Event posting
+//	ESP_ERROR_CHECK(esp_event_post_to
+//	(
+//		*loop_handle,
+//		PIR_EVENT,
+//		PIR_EVENT_ENTERED_ROOM,
+//		NULL,
+//		0,
+//		1000
+//	));
+//	ESP_ERROR_CHECK(esp_event_post_to
+//	(
+//		*loop_handle,
+//		PIR_EVENT,
+//		PIR_EVENT_EXITED_ROOM,
+//		NULL,
+//		0,
+//		1000
+//	));
+//
+//	//Event loop cleanup
+//	ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
+//	(
+//		*loop_handle,
+//		PIR_EVENT,
+//		ESP_EVENT_ANY_ID,
+//		*handler_instance
+//	));
+//	ESP_ERROR_CHECK(esp_event_loop_delete
+//	(
+//		*loop_handle
+//	));
+//
+//	ESP_LOGI(TAG, "Ending loop setup");
 }

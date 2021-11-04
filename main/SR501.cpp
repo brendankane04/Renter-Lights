@@ -15,14 +15,15 @@
 static const char *TAG = "SR501";
 
 
-SR501::SR501(gpio_num_t pin, esp_event_handler_t external_handler)
+SR501::SR501(gpio_num_t pin, external_handler_t external_handler)
 {
 	//Initialize the simple members
 	this->pin = pin;
 	this->populated = 0;
 	this->handle = NULL;
-	this->event_loop_handle = new esp_event_loop_handle_t;
-	this->event_loop_instance = new esp_event_handler_instance_t;
+//	this->event_loop_handle = new esp_event_loop_handle_t;
+//	this->event_loop_instance = new esp_event_handler_instance_t;
+	this->external_handler = external_handler;
 
 	esp_event_loop_args_t loop_args =
 	{
@@ -30,7 +31,7 @@ SR501::SR501(gpio_num_t pin, esp_event_handler_t external_handler)
 		.task_name = "Sensor to wifi event loop",
 		.task_priority = 5,
 		.task_stack_size = 4096,
-		.task_core_id = NULL
+		.task_core_id = 0
 	};
 
     //Initialize the input GPIO
@@ -71,7 +72,8 @@ void poll_for_people(void *arg)
 //		if(!status) wifi.send("SR501: Getting signal: LOW \n");
 //		else		wifi.send("SR501: Getting signal: HIGH\n");
 		ESP_LOGI(TAG, "Calling entered interrupt...");
-		esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, (size_t) 0, 100);
+//		esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, (size_t) 0, 100);
+		task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
 
 		if(status)
 		{//If it's high, set the status high & start the counter
@@ -80,7 +82,8 @@ void poll_for_people(void *arg)
 				//TODO: implement a signal (interrupt on a freeRTOS level)
 //				wifi.send("PIR_ENTERED\n");
 				ESP_LOGI(TAG, "ENTERED");
-				esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, (size_t) 0, 100);
+//				esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL, (size_t) 0, 100);
+				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
 			}
 			task_this->populated = true;
 			minutes_off = 0;
@@ -106,7 +109,8 @@ void poll_for_people(void *arg)
 				//TODO: implement a signal of person leaving
 //				wifi.send("PIR_EXITED\n");
 				ESP_LOGI(TAG, "EXITED");
-				esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL, (size_t) 0, 100);
+//				esp_event_post_to(task_this->event_loop_handle, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL, (size_t) 0, 100);
+				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL);
 			}
 			task_this->populated = 0;
 			minutes_off = 0;
@@ -119,32 +123,32 @@ int SR501::enable()
 {
 	BaseType_t status;
 
-	esp_event_loop_args_t loop_args =
-	{
-		.queue_size = 4,
-		.task_name = "Sensor to wifi event loop",
-		.task_priority = 4,
-		.task_stack_size = 4096,
-		.task_core_id = NULL
-	};
+//	esp_event_loop_args_t loop_args =
+//	{
+//		.queue_size = 4,
+//		.task_name = "Sensor to wifi event loop",
+//		.task_priority = 4,
+//		.task_stack_size = 4096,
+//		.task_core_id = NULL
+//	};
 
-	ESP_LOGI(TAG, "beginning event loop setup");
-	//Event loop setup
-	ESP_ERROR_CHECK(esp_event_loop_create
-	(
-		&loop_args,
-		&this->event_loop_handle
-	));
-	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
-	(
-		event_loop_handle,
-		PIR_EVENT,
-		ESP_EVENT_ANY_ID,
-		this->external_handler,
-		NULL,
-		&this->event_loop_instance
-	));
-	ESP_LOGI(TAG, "ending event loop setup");
+//	ESP_LOGI(TAG, "beginning event loop setup");
+//	//Event loop setup
+//	ESP_ERROR_CHECK(esp_event_loop_create
+//	(
+//		&loop_args,
+//		&this->event_loop_handle
+//	));
+//	ESP_ERROR_CHECK(esp_event_handler_instance_register_with
+//	(
+//		event_loop_handle,
+//		PIR_EVENT,
+//		ESP_EVENT_ANY_ID,
+//		this->external_handler,
+//		NULL,
+//		&this->event_loop_instance
+//	));
+//	ESP_LOGI(TAG, "ending event loop setup");
 
     status = xTaskCreate(poll_for_people, "Poll sensor for people & keep variable updated", 4096, (void*) this, 5, &this->handle);
     if(status == pdPASS)
@@ -159,20 +163,20 @@ void SR501::disable()
 	//Only call the task if it won't delete the current task
 	if(this->handle != NULL)
 	{
-		ESP_LOGI(TAG, "beginning event loop cleanup");
-		//unregister & delete the event loop
-		ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
-		(
-			event_loop_handle,
-			PIR_EVENT,
-			ESP_EVENT_ANY_ID,
-			this->event_loop_instance
-		));
-		ESP_ERROR_CHECK(esp_event_loop_delete
-		(
-			this->event_loop_handle
-		));
-		ESP_LOGI(TAG, "ending event loop cleanup");
+//		ESP_LOGI(TAG, "beginning event loop cleanup");
+//		//unregister & delete the event loop
+//		ESP_ERROR_CHECK(esp_event_handler_instance_unregister_with
+//		(
+//			event_loop_handle,
+//			PIR_EVENT,
+//			ESP_EVENT_ANY_ID,
+//			this->event_loop_instance
+//		));
+//		ESP_ERROR_CHECK(esp_event_loop_delete
+//		(
+//			this->event_loop_handle
+//		));
+//		ESP_LOGI(TAG, "ending event loop cleanup");
 
 		//Delete the the task
 		vTaskDelete(this->handle);
