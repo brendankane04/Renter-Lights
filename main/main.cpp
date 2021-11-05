@@ -32,14 +32,12 @@ static const char *TAG = "main";
 extern "C" { void app_main(); }
 
 
-
-
 //Send signals to the network based on the input
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target("192.168.1.155", 21);
-    ESP_LOGI(TAG, "Interrupt received");
+
 	switch(id)
 	{
 		case PIR_EVENT_ENTERED_ROOM:
