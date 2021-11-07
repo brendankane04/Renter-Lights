@@ -57,7 +57,29 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 
 void servo_handler(void *arg)
 {
+P	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    wifi.set_target("192.168.1.155", 21);
+    SG90 *servo = new SG90(GPIO_NUM_14);
+    char buffer[8];
 
+	while(1)
+	{
+		wifi.recv(buffer, 8);
+
+		if(strcmp(buffer, "SERVO_ON") == 0)
+		{
+			servo->set_on();
+		}
+		else if(strcmp(buffer, "SERVO_NO") == 0)
+		{
+			servo->set_off();
+		}
+		else
+		{
+			ESP_LOGW(TAG, "Unexpected servo signal received");
+		}
+
+	}
 }
 
 void app_main(void)
