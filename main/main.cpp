@@ -21,6 +21,9 @@ static const char *TAG = "main";
 extern "C" { void app_main(); }
 
 
+static TaskHandle_t *servo_handler = new TaskHandle_t;
+
+
 //Send signals to the network based on the input
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
@@ -44,8 +47,9 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 	}
 }
 
-void servo_handler(void *arg)
+void servo_listen(void *arg)
 {
+	ESP_LOGI(TAG, "beginning task...");
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target("192.168.1.155", 21);
     SG90 *servo = new SG90(GPIO_NUM_14);
@@ -53,14 +57,18 @@ void servo_handler(void *arg)
 
 	while(1)
 	{
+		ESP_LOGI(TAG, "Getting buffer data");
 		wifi.recv(buffer, 8);
+		ESP_LOGI(TAG, "Buffer received: %s", buffer);
 
 		if(strcmp(buffer, "SERVO_ON") == 0)
 		{
+			ESP_LOGI(TAG, "SERVO_ON");
 			servo->set_on();
 		}
 		else if(strcmp(buffer, "SERVO_NO") == 0)
 		{
+			ESP_LOGI(TAG, "SERVO_NO");
 			servo->set_off();
 		}
 		else
@@ -73,5 +81,7 @@ void servo_handler(void *arg)
 
 void app_main(void)
 {
-
+	ESP_LOGI(TAG, "Task creation beginning...");
+	xTaskCreate(servo_listen, "Servo receiver task", 4096, NULL, 4, servo_handler);
+	ESP_LOGI(TAG, "Task creation completed");
 }
