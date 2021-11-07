@@ -2,7 +2,10 @@
 #include "driver/mcpwm.h"
 #include "soc/mcpwm_periph.h"
 #include "SG90.h"
+#include "esp_log.h"
 
+
+static const char *TAG = "servo";
 
 SG90::SG90(gpio_num_t pin)
 {
@@ -33,6 +36,7 @@ uint32_t SG90::get_pulsewidth(uint32_t degree_of_rotation)
 
 void SG90::set_pos(uint32_t pos)
 {
+	ESP_LOGI(TAG, "setting position: %d", pos);
 	uint32_t angle = get_pulsewidth(pos);
 	mcpwm_set_duty_in_us(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, angle);
 }
