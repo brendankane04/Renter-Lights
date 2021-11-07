@@ -32,10 +32,6 @@ class SR501
 		const int polling_delay = 2;
 		//handler associated with each object
 		TaskHandle_t handle;
-		//Handler for the external event loop
-		esp_event_loop_handle_t event_loop_handle;
-		//Instance for the external event loop
-		esp_event_handler_instance_t event_loop_instance;
 		//Function run by the event loop
 		external_handler_t external_handler;
 
