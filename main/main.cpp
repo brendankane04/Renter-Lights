@@ -52,7 +52,7 @@ void servo_listen(void *arg)
 	ESP_LOGI(TAG, "beginning task...");
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target("192.168.1.155", 21);
-    SG90 *servo = new SG90(GPIO_NUM_14);
+    SG90 *servo = new SG90(GPIO_NUM_2);
     char buffer[8];
 
 	while(1)
@@ -81,7 +81,5 @@ void servo_listen(void *arg)
 
 void app_main(void)
 {
-	ESP_LOGI(TAG, "Task creation beginning...");
 	xTaskCreate(servo_listen, "Servo receiver task", 4096, NULL, 4, servo_handler);
-	ESP_LOGI(TAG, "Task creation completed");
 }
