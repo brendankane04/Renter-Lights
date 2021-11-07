@@ -84,10 +84,8 @@ P	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBren
 
 void app_main(void)
 {
-	ESP_LOGI(TAG, "Beginning loop setup");
-
-	SR501 *pir = new SR501(GPIO_NUM_2, populated_signal_handler);
-	pir->enable();
+//	SR501 *pir = new SR501(GPIO_NUM_2, populated_signal_handler);
+//	pir->enable();
 
 
 //	esp_event_loop_handle_t *loop_handle = new esp_event_loop_handle_t;
