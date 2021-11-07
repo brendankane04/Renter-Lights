@@ -13,7 +13,16 @@
 
 
 #define BLINK_GPIO GPIO_NUM_33
+#define SERVO_GPIO GPIO_NUM_2
+#define SENSOR_GPIO GPIO_NUM14
+
+#define SSID "Home Newtwork"
+#define PASSWORD "ThanksBrendan!"
+#define TARGET_IP "192.168.1.155"
+#define TARGET_PORT 21
+
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
+
 
 static const char *TAG = "main";
 
@@ -27,8 +36,8 @@ static TaskHandle_t *servo_handler = new TaskHandle_t;
 //Send signals to the network based on the input
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
-	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-    wifi.set_target("192.168.1.155", 21);
+	Wifi_Interface wifi = Wifi_Interface::get_instance(SSID, PASSWORD);
+    wifi.set_target(TARGET_IP, TARGET_PORT);
 
 	switch(id)
 	{
@@ -52,7 +61,7 @@ void servo_listen(void *arg)
 	ESP_LOGI(TAG, "beginning task...");
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target("192.168.1.155", 21);
-    SG90 *servo = new SG90(GPIO_NUM_2);
+    SG90 *servo = new SG90(SERVO_GPIO);
     char buffer[8];
 
 	while(1)
