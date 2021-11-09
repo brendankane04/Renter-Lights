@@ -13,7 +13,7 @@ class SG90
 		//Servo pulse         width constants
 		static const int SERVO_MIN_PULSEWIDTH = 1000; //Minimum pulse width in microseconds
 		static const int SERVO_MAX_PULSEWIDTH = 3000; //Maximum pulse width in microseconds
-		static const int SERVO_MAX_DEGREE = 180; //Maximum angle in degree upto which servo can rotate
+		static const int SERVO_MAX_DEGREE = 170; //Maximum angle in degree upto which servo can rotate
 
 		//Lever control constants
 		static const int SERVO_ON_DEGREE = 180;
