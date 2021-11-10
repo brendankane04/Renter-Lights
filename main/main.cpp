@@ -55,11 +55,11 @@ void servo_handler(void *arg)
 	{
 		wifi.recv(buffer, 8);
 
-		if(strcmp(buffer, "SERVO_ON") == 0)
+		if(strcmp(buffer, SERVO_ON) == 0)
 		{
 			servo->set_on();
 		}
-		else if(strcmp(buffer, "SERVO_NO") == 0)
+		else if(strcmp(buffer, SERVO_OFF) == 0)
 		{
 			servo->set_off();
 		}

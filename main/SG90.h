@@ -5,6 +5,11 @@
 #include "driver/gpio.h"
 
 
+#define	SERVO_UNDEFINED	"SERVO_00"
+#define SERVO_ON		"SERVO_01"
+#define	SERVO_OFF		"SERVO_02"
+
+
 //Driver for the SG90 Servo motor
 //Datasheet: http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/stores/sg90_datasheet.pdf
 class SG90
