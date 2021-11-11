@@ -50,4 +50,5 @@ class SR501
 		void disable();
 };
 
+
 #endif
