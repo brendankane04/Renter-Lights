@@ -5,6 +5,11 @@
  *      Author: brend
  */
 
+
+#ifndef MAIN_WIFI_INTERFACE_H_
+#define MAIN_WIFI_INTERFACE_H_
+
+
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -14,12 +19,8 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
-
 #include "lwip/err.h"
 #include "lwip/sys.h"
-
-#ifndef MAIN_WIFI_INTERFACE_H_
-#define MAIN_WIFI_INTERFACE_H_
 
 
 class Wifi_Interface
@@ -34,9 +35,11 @@ class Wifi_Interface
 		//Current target port
 		int  tcp_port;
 
+
 	private:
 		//Connect to a wifi network
 		Wifi_Interface(char *ssid, char *password);
+
 
 	public:
 		//Return the instance of the object
