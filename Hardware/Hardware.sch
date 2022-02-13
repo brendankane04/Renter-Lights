@@ -24,4 +24,26 @@ F 3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_
 	1    2600 3700
 	1    0    0    -1  
 $EndComp
+$Comp
+L Device:C C?
+U 1 1 62087589
+P 3450 1550
+F 0 "C?" H 3565 1596 50  0000 L CNN
+F 1 "C" H 3565 1505 50  0000 L CNN
+F 2 "" H 3488 1400 50  0001 C CNN
+F 3 "~" H 3450 1550 50  0001 C CNN
+	1    3450 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 620890B1
+P 2950 1550
+F 0 "C?" H 3065 1596 50  0000 L CNN
+F 1 "C" H 3065 1505 50  0000 L CNN
+F 2 "" H 2988 1400 50  0001 C CNN
+F 3 "~" H 2950 1550 50  0001 C CNN
+	1    2950 1550
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
