@@ -24,26 +24,280 @@ F 3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_
 	1    2600 3700
 	1    0    0    -1  
 $EndComp
+Text Label 2600 1500 0    50   ~ 0
+VDD33
+$Comp
+L power:GND #PWR?
+U 1 1 6208BBF7
+P 2600 5100
+F 0 "#PWR?" H 2600 4850 50  0001 C CNN
+F 1 "GND" H 2605 4927 50  0000 C CNN
+F 2 "" H 2600 5100 50  0001 C CNN
+F 3 "" H 2600 5100 50  0001 C CNN
+	1    2600 5100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 1500 2600 1700
 $Comp
 L Device:C C?
-U 1 1 62087589
-P 3450 1550
-F 0 "C?" H 3565 1596 50  0000 L CNN
-F 1 "C" H 3565 1505 50  0000 L CNN
-F 2 "" H 3488 1400 50  0001 C CNN
-F 3 "~" H 3450 1550 50  0001 C CNN
-	1    3450 1550
+U 1 1 6208DCCB
+P 1800 1850
+F 0 "C?" H 1915 1896 50  0000 L CNN
+F 1 "0.1uF" H 1915 1805 50  0000 L CNN
+F 2 "" H 1838 1700 50  0001 C CNN
+F 3 "~" H 1800 1850 50  0001 C CNN
+	1    1800 1850
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:C C?
-U 1 1 620890B1
-P 2950 1550
-F 0 "C?" H 3065 1596 50  0000 L CNN
-F 1 "C" H 3065 1505 50  0000 L CNN
-F 2 "" H 2988 1400 50  0001 C CNN
-F 3 "~" H 2950 1550 50  0001 C CNN
-	1    2950 1550
+U 1 1 6208DCD1
+P 1300 1850
+F 0 "C?" H 1415 1896 50  0000 L CNN
+F 1 "10uF" H 1415 1805 50  0000 L CNN
+F 2 "" H 1338 1700 50  0001 C CNN
+F 3 "~" H 1300 1850 50  0001 C CNN
+	1    1300 1850
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	1300 1700 1800 1700
+Wire Wire Line
+	1300 2000 1800 2000
+$Comp
+L power:GND #PWR?
+U 1 1 6208DCDB
+P 1800 2000
+F 0 "#PWR?" H 1800 1750 50  0001 C CNN
+F 1 "GND" H 1805 1827 50  0000 C CNN
+F 2 "" H 1800 2000 50  0001 C CNN
+F 3 "" H 1800 2000 50  0001 C CNN
+	1    1800 2000
+	1    0    0    -1  
+$EndComp
+Connection ~ 1800 2000
+Wire Wire Line
+	1800 1700 2600 1700
+Connection ~ 1800 1700
+Connection ~ 2600 1700
+Wire Wire Line
+	2600 1700 2600 2300
+Wire Wire Line
+	2000 2500 1100 2500
+Wire Wire Line
+	1100 2500 1100 2400
+$Comp
+L Device:R R?
+U 1 1 6208E6BA
+P 1100 2250
+F 0 "R?" H 1170 2296 50  0000 L CNN
+F 1 "10K" H 1170 2205 50  0000 L CNN
+F 2 "" V 1030 2250 50  0001 C CNN
+F 3 "~" H 1100 2250 50  0001 C CNN
+	1    1100 2250
+	1    0    0    -1  
+$EndComp
+Text Label 1100 2000 2    50   ~ 0
+VDD33
+Wire Wire Line
+	1100 2000 1100 2100
+$Comp
+L Device:C C?
+U 1 1 6208FDDA
+P 650 2650
+F 0 "C?" H 765 2696 50  0000 L CNN
+F 1 "0.1uF" H 765 2605 50  0000 L CNN
+F 2 "" H 688 2500 50  0001 C CNN
+F 3 "~" H 650 2650 50  0001 C CNN
+	1    650  2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	650  2500 1100 2500
+Connection ~ 1100 2500
+$Comp
+L power:GND #PWR?
+U 1 1 620907CB
+P 650 2800
+F 0 "#PWR?" H 650 2550 50  0001 C CNN
+F 1 "GND" H 655 2627 50  0000 C CNN
+F 2 "" H 650 2800 50  0001 C CNN
+F 3 "" H 650 2800 50  0001 C CNN
+	1    650  2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 2500 3950 2500
+Text Label 3500 2500 0    50   ~ 0
+Boot_Option
+$Comp
+L Connector_Generic:Conn_01x02 J?
+U 1 1 62092936
+P 1900 900
+F 0 "J?" H 1980 892 50  0000 L CNN
+F 1 "Conn_01x02" H 1980 801 50  0000 L CNN
+F 2 "" H 1900 900 50  0001 C CNN
+F 3 "~" H 1900 900 50  0001 C CNN
+	1    1900 900 
+	1    0    0    -1  
+$EndComp
+Text Notes 1850 850  0    50   ~ 0
+Boot Option\n
+Wire Wire Line
+	1200 900  1700 900 
+$Comp
+L power:GND #PWR?
+U 1 1 62094E3B
+P 1200 1100
+F 0 "#PWR?" H 1200 850 50  0001 C CNN
+F 1 "GND" H 1205 927 50  0000 C CNN
+F 2 "" H 1200 1100 50  0001 C CNN
+F 3 "" H 1200 1100 50  0001 C CNN
+	1    1200 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1200 1000 1200 1100
+Wire Wire Line
+	1200 1000 1700 1000
+$Comp
+L Connector_Generic:Conn_01x03 J?
+U 1 1 62097780
+P 4400 2350
+F 0 "J?" V 4364 2162 50  0000 R CNN
+F 1 "Conn_01x03" V 4273 2162 50  0000 R CNN
+F 2 "" H 4400 2350 50  0001 C CNN
+F 3 "~" H 4400 2350 50  0001 C CNN
+	1    4400 2350
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3200 2600 4300 2600
+Wire Wire Line
+	4300 2600 4300 2550
+Wire Wire Line
+	4400 2550 4400 2800
+Wire Wire Line
+	4400 2800 3200 2800
+Wire Wire Line
+	4500 2550 4600 2550
+Wire Wire Line
+	4600 2550 4600 2600
+$Comp
+L power:GND #PWR?
+U 1 1 6209A315
+P 4600 2600
+F 0 "#PWR?" H 4600 2350 50  0001 C CNN
+F 1 "GND" H 4605 2427 50  0000 C CNN
+F 2 "" H 4600 2600 50  0001 C CNN
+F 3 "" H 4600 2600 50  0001 C CNN
+	1    4600 2600
+	1    0    0    -1  
+$EndComp
+Text Notes 4250 2300 0    50   ~ 0
+UART Prog
+Text Label 3250 2600 0    50   ~ 0
+TXD
+Text Label 3250 2800 0    50   ~ 0
+RXD
+$Comp
+L Connector_Generic:Conn_01x04 J?
+U 1 1 6209B1FA
+P 4400 950
+F 0 "J?" H 4480 942 50  0000 L CNN
+F 1 "Conn_01x04" H 4480 851 50  0000 L CNN
+F 2 "" H 4400 950 50  0001 C CNN
+F 3 "~" H 4400 950 50  0001 C CNN
+	1    4400 950 
+	1    0    0    -1  
+$EndComp
+Text Notes 4350 800  0    50   ~ 0
+JTAG
+Wire Wire Line
+	4200 850  3950 850 
+Wire Wire Line
+	4200 950  3950 950 
+Wire Wire Line
+	4200 1150 3950 1150
+Text Label 3450 1050 0    50   ~ 0
+MTCK
+Text Label 3450 1150 0    50   ~ 0
+MTDO
+Text Label 1200 900  0    50   ~ 0
+Boot_Option
+Wire Wire Line
+	4200 1050 3950 1050
+$Comp
+L Device:R R?
+U 1 1 6209F2AC
+P 3800 850
+F 0 "R?" V 3593 850 50  0000 C CNN
+F 1 "100" V 3684 850 50  0000 C CNN
+F 2 "" V 3730 850 50  0001 C CNN
+F 3 "~" H 3800 850 50  0001 C CNN
+	1    3800 850 
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 6209FB1B
+P 3800 950
+F 0 "R?" V 3593 950 50  0000 C CNN
+F 1 "100" V 3684 950 50  0000 C CNN
+F 2 "" V 3730 950 50  0001 C CNN
+F 3 "~" H 3800 950 50  0001 C CNN
+	1    3800 950 
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 620A09BA
+P 3800 1050
+F 0 "R?" V 3593 1050 50  0000 C CNN
+F 1 "100" V 3684 1050 50  0000 C CNN
+F 2 "" V 3730 1050 50  0001 C CNN
+F 3 "~" H 3800 1050 50  0001 C CNN
+	1    3800 1050
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 620A0BC0
+P 3800 1150
+F 0 "R?" V 3593 1150 50  0000 C CNN
+F 1 "100" V 3684 1150 50  0000 C CNN
+F 2 "" V 3730 1150 50  0001 C CNN
+F 3 "~" H 3800 1150 50  0001 C CNN
+	1    3800 1150
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3650 850  3450 850 
+Wire Wire Line
+	3650 950  3450 950 
+Wire Wire Line
+	3650 1050 3450 1050
+Wire Wire Line
+	3650 1150 3450 1150
+Text Label 3450 850  0    50   ~ 0
+MTMS
+Text Label 3450 950  0    50   ~ 0
+MTDI
+Text Label 3250 3300 0    50   ~ 0
+MTMS
+Wire Wire Line
+	3200 3300 3450 3300
+Text Label 3250 3100 0    50   ~ 0
+MTDI
+Text Label 3250 3200 0    50   ~ 0
+MTCK
+Text Label 3250 3400 0    50   ~ 0
+MTDO
+Wire Wire Line
+	3200 3100 3450 3100
+Wire Wire Line
+	3200 3200 3450 3200
+Wire Wire Line
+	3200 3400 3450 3400
 $EndSCHEMATC
