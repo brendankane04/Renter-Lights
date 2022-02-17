@@ -43,7 +43,7 @@ U 1 1 6208DCCB
 P 1800 1850
 F 0 "C3" H 1915 1896 50  0000 L CNN
 F 1 "0.1uF" H 1915 1805 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1838 1700 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 1838 1700 50  0001 C CNN
 F 3 "~" H 1800 1850 50  0001 C CNN
 	1    1800 1850
 	1    0    0    -1  
@@ -54,13 +54,11 @@ U 1 1 6208DCD1
 P 1300 1850
 F 0 "C2" H 1415 1896 50  0000 L CNN
 F 1 "10uF" H 1415 1805 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1338 1700 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 1338 1700 50  0001 C CNN
 F 3 "~" H 1300 1850 50  0001 C CNN
 	1    1300 1850
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	1300 1700 1800 1700
 Wire Wire Line
 	1300 2000 1800 2000
 $Comp
@@ -74,10 +72,6 @@ F 3 "" H 1800 2000 50  0001 C CNN
 	1    1800 2000
 	1    0    0    -1  
 $EndComp
-Connection ~ 1800 2000
-Wire Wire Line
-	1800 1700 2600 1700
-Connection ~ 1800 1700
 Connection ~ 2600 1700
 Wire Wire Line
 	2600 1700 2600 2300
@@ -91,7 +85,7 @@ U 1 1 6208E6BA
 P 1100 2250
 F 0 "R1" H 1170 2296 50  0000 L CNN
 F 1 "10K" H 1170 2205 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 1030 2250 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical" V 1030 2250 50  0001 C CNN
 F 3 "~" H 1100 2250 50  0001 C CNN
 	1    1100 2250
 	1    0    0    -1  
@@ -106,7 +100,7 @@ U 1 1 6208FDDA
 P 650 2650
 F 0 "C1" H 765 2696 50  0000 L CNN
 F 1 "0.1uF" H 765 2605 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 688 2500 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 688 2500 50  0001 C CNN
 F 3 "~" H 650 2650 50  0001 C CNN
 	1    650  2650
 	1    0    0    -1  
@@ -232,7 +226,7 @@ U 1 1 6209F2AC
 P 6000 3850
 F 0 "R2" V 5793 3850 50  0000 C CNN
 F 1 "100" V 5884 3850 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 5930 3850 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical" V 5930 3850 50  0001 C CNN
 F 3 "~" H 6000 3850 50  0001 C CNN
 	1    6000 3850
 	0    1    1    0   
@@ -243,7 +237,7 @@ U 1 1 6209FB1B
 P 6000 3950
 F 0 "R3" V 5793 3950 50  0000 C CNN
 F 1 "100" V 5884 3950 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 5930 3950 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical" V 5930 3950 50  0001 C CNN
 F 3 "~" H 6000 3950 50  0001 C CNN
 	1    6000 3950
 	0    1    1    0   
@@ -254,7 +248,7 @@ U 1 1 620A09BA
 P 6000 4050
 F 0 "R4" V 5793 4050 50  0000 C CNN
 F 1 "100" V 5884 4050 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 5930 4050 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical" V 5930 4050 50  0001 C CNN
 F 3 "~" H 6000 4050 50  0001 C CNN
 	1    6000 4050
 	0    1    1    0   
@@ -265,7 +259,7 @@ U 1 1 620A0BC0
 P 6000 4150
 F 0 "R5" V 5793 4150 50  0000 C CNN
 F 1 "100" V 5884 4150 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 5930 4150 50  0001 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical" V 5930 4150 50  0001 C CNN
 F 3 "~" H 6000 4150 50  0001 C CNN
 	1    6000 4150
 	0    1    1    0   
@@ -476,4 +470,10 @@ Wire Wire Line
 	8850 4750 8850 4600
 Wire Wire Line
 	2600 5100 2600 5150
+Wire Wire Line
+	1300 1700 1800 1700
+Connection ~ 1800 1700
+Wire Wire Line
+	1800 1700 2600 1700
+Connection ~ 1800 2000
 $EndSCHEMATC
