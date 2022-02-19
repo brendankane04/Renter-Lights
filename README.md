@@ -13,4 +13,4 @@ main.cpp: main file<br>
 
 # Hardware
 
-
+Hardware.sch: The schematics for the minimum unit<br>
