@@ -56,19 +56,20 @@ void servo_handler(void *arg)
 		wifi.recv(buffer, 8);
 
 		if(strcmp(buffer, SERVO_ON) == 0)
-		{
 			servo->set_on();
-		}
 		else if(strcmp(buffer, SERVO_OFF) == 0)
-		{
 			servo->set_off();
-		}
 		else
-		{
 			ESP_LOGW(TAG, "Unexpected servo signal received");
-		}
-
 	}
+}
+
+void sensor handler(void *arg)
+{
+	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+    wifi.set_target("192.168.1.155", 21);
+    SR501 sensor = new SR501(GPIO_NUM_23, populated_signal_handler);
+    sensor->enable();
 }
 
 void app_main(void)
