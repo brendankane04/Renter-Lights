@@ -12,10 +12,15 @@
 #include "Wifi_Interface.h"
 
 
-#define BLINK_GPIO GPIO_NUM_33
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
 static const char *TAG = "main";
+
+
+//Application-specific defines
+#define BLINK_GPIO GPIO_NUM_33
+#define TARGET_IP "192.168.1.155"
+#define TARGET_PORT 21
 
 
 extern "C" { void app_main(); }
@@ -25,7 +30,7 @@ extern "C" { void app_main(); }
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-    wifi.set_target("192.168.1.155", 21);
+    wifi.set_target(TARGET_IP, TARGET_PORT);
 
 	switch(id)
 	{
@@ -44,10 +49,11 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 	}
 }
 
+//Call this function to run the device as a servo
 void servo_handler(void *arg)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-    wifi.set_target("192.168.1.155", 21);
+    wifi.set_target(TARGET_IP, TARGET_PORT);
     SG90 *servo = new SG90(GPIO_NUM_14);
     char buffer[8];
 
@@ -64,12 +70,14 @@ void servo_handler(void *arg)
 	}
 }
 
-void sensor handler(void *arg)
+//Call this function to run the device as a PIR sensor
+int sensor_handler(void *arg)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
-    wifi.set_target("192.168.1.155", 21);
+    wifi.set_target(TARGET_IP, TARGET_PORT);
+    //Start up a new sensor instance & run its internal handler
     SR501 sensor = new SR501(GPIO_NUM_23, populated_signal_handler);
-    sensor->enable();
+    return sensor->enable(); //Return the success status of the RTOS call
 }
 
 void app_main(void)
