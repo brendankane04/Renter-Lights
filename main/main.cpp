@@ -21,6 +21,7 @@ static const char *TAG = "main";
 #define BLINK_GPIO GPIO_NUM_33
 #define TARGET_IP "192.168.1.155"
 #define TARGET_PORT 21
+#define OPERATING_MODE 0
 
 
 extern "C" { void app_main(); }
@@ -82,5 +83,15 @@ int sensor_handler(void *arg)
 
 void app_main(void)
 {
-
+	switch(OPERATING_MODE)
+	{
+		case 0:
+			servo_handler();
+			break;
+		case 1:
+			sensor_handler();
+			break;
+		default
+			break;
+	}
 }
