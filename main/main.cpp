@@ -77,7 +77,7 @@ int sensor_handler(void *arg)
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
     //Start up a new sensor instance & run its internal handler
-    SR501 sensor = new SR501(GPIO_NUM_23, populated_signal_handler);
+    SR501 *sensor = new SR501(GPIO_NUM_23, populated_signal_handler);
     return sensor->enable(); //Return the success status of the RTOS call
 }
 
@@ -86,12 +86,12 @@ void app_main(void)
 	switch(OPERATING_MODE)
 	{
 		case 0:
-			servo_handler();
+			servo_handler(NULL);
 			break;
 		case 1:
-			sensor_handler();
+			sensor_handler(NULL);
 			break;
-		default
+		default:
 			break;
 	}
 }
