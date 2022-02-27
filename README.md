@@ -14,3 +14,4 @@ main.cpp: main file<br>
 # Hardware
 
 Hardware.sch: The schematics for the minimum unit<br>
+TODO: Obtain SMD components & convert the existing THT components.<br>
