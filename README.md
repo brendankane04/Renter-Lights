@@ -14,4 +14,6 @@ main.cpp: main file<br>
 # Hardware
 
 Hardware.sch: The schematics for the minimum unit<br>
-TODO: Obtain SMD components & convert the existing THT components.<br>
+
+An ESP32-WROOM-32E was chosen as the MCU.<br>
+
