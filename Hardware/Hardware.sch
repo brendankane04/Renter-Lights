@@ -481,10 +481,10 @@ MTMS
 Wire Wire Line
 	5700 5400 6200 5400
 $Comp
-L Connector_Generic:Conn_01x03 J?
+L Connector_Generic:Conn_01x03 J7
 U 1 1 6211C164
 P 6400 5400
-F 0 "J?" V 6364 5212 50  0000 R CNN
+F 0 "J7" V 6364 5212 50  0000 R CNN
 F 1 "Conn_01x03" V 6273 5212 50  0000 R CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 6400 5400 50  0001 C CNN
 F 3 "~" H 6400 5400 50  0001 C CNN
@@ -494,10 +494,10 @@ $EndComp
 Wire Wire Line
 	6050 5300 6200 5300
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0109
 U 1 1 6211EACD
 P 6050 5600
-F 0 "#PWR?" H 6050 5350 50  0001 C CNN
+F 0 "#PWR0109" H 6050 5350 50  0001 C CNN
 F 1 "GND" H 6055 5427 50  0000 C CNN
 F 2 "" H 6050 5600 50  0001 C CNN
 F 3 "" H 6050 5600 50  0001 C CNN
@@ -516,4 +516,26 @@ Text Notes 6350 5250 0    50   ~ 0
 Servo
 Text Notes 8250 4200 0    50   ~ 0
 Power Nets
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 6257BFE1
+P 8300 1400
+F 0 "H1" H 8400 1446 50  0000 L CNN
+F 1 "MountingHole" H 8400 1355 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.1mm" H 8300 1400 50  0001 C CNN
+F 3 "~" H 8300 1400 50  0001 C CNN
+	1    8300 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 6257CCB1
+P 8300 1700
+F 0 "H2" H 8400 1746 50  0000 L CNN
+F 1 "MountingHole" H 8400 1655 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.1mm" H 8300 1700 50  0001 C CNN
+F 3 "~" H 8300 1700 50  0001 C CNN
+	1    8300 1700
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
