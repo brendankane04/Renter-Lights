@@ -17,3 +17,5 @@ Hardware.sch: The schematics for the minimum unit<br>
 
 An ESP32-WROOM-32E was chosen as the MCU. It might work with the existing footprint.<br>
 
+TODO: Remove the fill under the WROOM. It's worrisome."
+
