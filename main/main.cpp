@@ -28,6 +28,7 @@ extern "C" { void app_main(); }
 
 
 //Send signals to the network based on the input
+//Uncalled by the user, just used by the internals
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
