@@ -153,17 +153,6 @@ Wire Wire Line
 	6000 2600 6000 2700
 Wire Wire Line
 	6000 2600 6500 2600
-$Comp
-L Connector_Generic:Conn_01x03 J3
-U 1 1 62097780
-P 4400 2350
-F 0 "J3" V 4364 2162 50  0000 R CNN
-F 1 "Conn_01x03" V 4273 2162 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 4400 2350 50  0001 C CNN
-F 3 "~" H 4400 2350 50  0001 C CNN
-	1    4400 2350
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	3200 2600 4300 2600
 Wire Wire Line
@@ -172,22 +161,7 @@ Wire Wire Line
 	4400 2550 4400 2800
 Wire Wire Line
 	4400 2800 3200 2800
-Wire Wire Line
-	4500 2550 4600 2550
-Wire Wire Line
-	4600 2550 4600 2600
-$Comp
-L power:GND #PWR0105
-U 1 1 6209A315
-P 4600 2600
-F 0 "#PWR0105" H 4600 2350 50  0001 C CNN
-F 1 "GND" H 4605 2427 50  0000 C CNN
-F 2 "" H 4600 2600 50  0001 C CNN
-F 3 "" H 4600 2600 50  0001 C CNN
-	1    4600 2600
-	1    0    0    -1  
-$EndComp
-Text Notes 4250 2300 0    50   ~ 0
+Text Notes 5200 2050 0    50   ~ 0
 UART Prog
 Text Label 3250 2600 0    50   ~ 0
 TXD
@@ -538,4 +512,32 @@ F 3 "~" H 8300 1700 50  0001 C CNN
 	1    8300 1700
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector_Generic:Conn_01x06 J?
+U 1 1 625FEE76
+P 5250 2300
+F 0 "J?" H 5330 2292 50  0000 L CNN
+F 1 "Conn_01x06" H 5330 2201 50  0000 L CNN
+F 2 "" H 5250 2300 50  0001 C CNN
+F 3 "~" H 5250 2300 50  0001 C CNN
+	1    5250 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 6260035B
+P 3900 2100
+F 0 "#PWR?" H 3900 1850 50  0001 C CNN
+F 1 "GND" H 3905 1927 50  0000 C CNN
+F 2 "" H 3900 2100 50  0001 C CNN
+F 3 "" H 3900 2100 50  0001 C CNN
+	1    3900 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2100 3900 1900
+Wire Wire Line
+	3900 1900 5050 1900
+Wire Wire Line
+	5050 1900 5050 2100
 $EndSCHEMATC
