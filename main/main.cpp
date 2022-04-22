@@ -56,7 +56,7 @@ void servo_handler(void *arg)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
-    SG90 *servo = new SG90(GPIO_NUM_14);
+    SG90 servo(GPIO_NUM_14);
     char buffer[8];
 
 	while(1)
@@ -64,9 +64,9 @@ void servo_handler(void *arg)
 		wifi.recv(buffer, 8);
 
 		if(strcmp(buffer, SERVO_ON) == 0)
-			servo->set_on();
+			servo.set_on();
 		else if(strcmp(buffer, SERVO_OFF) == 0)
-			servo->set_off();
+			servo.set_off();
 		else
 			ESP_LOGW(TAG, "Unexpected servo signal received");
 	}
@@ -77,6 +77,7 @@ int sensor_handler(void *arg)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
+
     //Start up a new sensor instance & run its internal handler
     SR501 *sensor = new SR501(GPIO_NUM_23, populated_signal_handler);
     return sensor->enable(); //Return the success status of the RTOS call
