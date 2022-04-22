@@ -119,9 +119,7 @@ F 3 "" H 650 2800 50  0001 C CNN
 	1    650  2800
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3200 2500 3950 2500
-Text Label 3500 2500 0    50   ~ 0
+Text Label 3250 2500 0    50   ~ 0
 Boot_Option
 $Comp
 L Connector_Generic:Conn_01x02 J1
@@ -153,16 +151,6 @@ Wire Wire Line
 	6000 2600 6000 2700
 Wire Wire Line
 	6000 2600 6500 2600
-Wire Wire Line
-	3200 2600 4300 2600
-Wire Wire Line
-	4300 2600 4300 2550
-Wire Wire Line
-	4400 2550 4400 2800
-Wire Wire Line
-	4400 2800 3200 2800
-Text Notes 5200 2050 0    50   ~ 0
-UART Prog
 Text Label 3250 2600 0    50   ~ 0
 TXD
 Text Label 3250 2800 0    50   ~ 0
@@ -345,44 +333,6 @@ Text Label 3200 4700 0    50   ~ 0
 IO34
 Text Label 3200 4800 0    50   ~ 0
 IO35
-$Comp
-L Connector_Generic:Conn_01x06 J5
-U 1 1 620D7FA6
-P 1350 4000
-F 0 "J5" H 1268 3475 50  0000 C CNN
-F 1 "Conn_01x06" H 1268 3566 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 1350 4000 50  0001 C CNN
-F 3 "~" H 1350 4000 50  0001 C CNN
-	1    1350 4000
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	2000 3800 1550 3800
-Wire Wire Line
-	1550 3900 2000 3900
-Wire Wire Line
-	1550 4000 2000 4000
-Wire Wire Line
-	1550 4100 2000 4100
-Wire Wire Line
-	2000 4200 1550 4200
-Wire Wire Line
-	1550 3700 2000 3700
-Text Label 1550 3700 0    50   ~ 0
-SDO
-Text Label 1550 3800 0    50   ~ 0
-SDI
-Text Label 1550 3900 0    50   ~ 0
-SHD
-Text Label 1550 4000 0    50   ~ 0
-SWP
-Text Label 1550 4100 0    50   ~ 0
-SCK
-Text Label 1550 4200 0    50   ~ 0
-SCS
-Text Notes 1300 4250 1    50   ~ 0
-Serial Data Port
-NoConn ~ 3200 2700
 NoConn ~ 3200 2900
 NoConn ~ 3200 3000
 NoConn ~ 3200 3500
@@ -524,20 +474,57 @@ F 3 "~" H 5250 2300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
-U 1 1 6260035B
-P 3900 2100
-F 0 "#PWR?" H 3900 1850 50  0001 C CNN
-F 1 "GND" H 3905 1927 50  0000 C CNN
-F 2 "" H 3900 2100 50  0001 C CNN
-F 3 "" H 3900 2100 50  0001 C CNN
-	1    3900 2100
+L power:GND #PWR0105
+U 1 1 6209A315
+P 4700 1900
+F 0 "#PWR0105" H 4700 1650 50  0001 C CNN
+F 1 "GND" H 4705 1727 50  0000 C CNN
+F 2 "" H 4700 1900 50  0001 C CNN
+F 3 "" H 4700 1900 50  0001 C CNN
+	1    4700 1900
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3900 2100 3900 1900
+	4700 1850 4700 1900
+Text Notes 5200 2050 0    50   ~ 0
+UART Prog
 Wire Wire Line
-	3900 1900 5050 1900
+	4700 1850 5050 1850
 Wire Wire Line
-	5050 1900 5050 2100
+	5050 1850 5050 2100
+Wire Wire Line
+	3200 2600 3450 2600
+Wire Wire Line
+	3200 2800 3450 2800
+Wire Wire Line
+	3200 2700 3450 2700
+NoConn ~ 2000 3700
+NoConn ~ 2000 3800
+NoConn ~ 2000 3900
+NoConn ~ 2000 4000
+NoConn ~ 2000 4100
+NoConn ~ 2000 4200
+Wire Wire Line
+	5050 2600 4550 2600
+Text Label 4550 2600 0    50   ~ 0
+Boot_Option
+Text Label 3250 2700 0    50   ~ 0
+IO2
+Text Label 1850 2500 0    50   ~ 0
+EN
+Wire Wire Line
+	3200 2500 3450 2500
+Wire Wire Line
+	5050 2200 4550 2200
+Wire Wire Line
+	5050 2400 4550 2400
+Wire Wire Line
+	5050 2500 4550 2500
+Text Label 4550 2200 0    50   ~ 0
+EN
+NoConn ~ 5050 2300
+Text Label 4550 2400 0    50   ~ 0
+RXD
+Text Label 4550 2500 0    50   ~ 0
+TXD
 $EndSCHEMATC
