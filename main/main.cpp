@@ -16,9 +16,12 @@
 
 static const char *TAG = "main";
 
+//GPIOs currently in use
+#define BLINK_GPIO 		GPIO_NUM_33
+#define	PIR_SIG_GPIO 	GPIO_NUM_23
+#define	SERVO_SIG_GPIO	GPIO_NUM_14
 
 //Application-specific defines
-#define BLINK_GPIO GPIO_NUM_33
 #define TARGET_IP "192.168.1.155"
 #define TARGET_PORT 21
 #define OPERATING_MODE 0
@@ -56,7 +59,7 @@ void servo_handler(void *arg)
 {
 	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
-    SG90 servo(GPIO_NUM_14);
+    SG90 servo(SERVO_SIG_GPIO);
     char buffer[8];
 
 	while(1)
@@ -79,7 +82,7 @@ int sensor_handler(void *arg)
     wifi.set_target(TARGET_IP, TARGET_PORT);
 
     //Start up a new sensor instance & run its internal handler
-    SR501 *sensor = new SR501(GPIO_NUM_23, populated_signal_handler);
+    SR501 *sensor = new SR501(PIR_SIG_GPIO, populated_signal_handler);
     return sensor->enable(); //Return the success status of the RTOS call
 }
 

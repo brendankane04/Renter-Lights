@@ -288,35 +288,6 @@ Text Label 5950 4350 2    50   ~ 0
 VDD33
 Text Notes 6250 4400 0    50   ~ 0
 Battery Input
-$Comp
-L Connector_Generic:Conn_01x08 J6
-U 1 1 620BF760
-P 3950 4400
-F 0 "J6" H 4030 4392 50  0000 L CNN
-F 1 "Conn_01x08" H 4030 4301 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical" H 3950 4400 50  0001 C CNN
-F 3 "~" H 3950 4400 50  0001 C CNN
-	1    3950 4400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3200 4800 3750 4800
-Wire Wire Line
-	3750 4700 3200 4700
-Wire Wire Line
-	3200 4600 3750 4600
-Wire Wire Line
-	3200 4500 3750 4500
-Wire Wire Line
-	3200 4400 3750 4400
-Wire Wire Line
-	3750 4300 3200 4300
-Wire Wire Line
-	3200 4200 3750 4200
-Wire Wire Line
-	3750 4100 3200 4100
-Text Notes 3900 4050 0    50   ~ 0
-IO Port
 Text Label 3200 4100 0    50   ~ 0
 IO23
 Text Label 3200 4200 0    50   ~ 0
@@ -463,12 +434,12 @@ F 3 "~" H 8300 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_01x06 J?
+L Connector_Generic:Conn_01x06 J3
 U 1 1 625FEE76
 P 5250 2300
-F 0 "J?" H 5330 2292 50  0000 L CNN
+F 0 "J3" H 5330 2292 50  0000 L CNN
 F 1 "Conn_01x06" H 5330 2201 50  0000 L CNN
-F 2 "" H 5250 2300 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 5250 2300 50  0001 C CNN
 F 3 "~" H 5250 2300 50  0001 C CNN
 	1    5250 2300
 	1    0    0    -1  
@@ -527,4 +498,44 @@ Text Label 4550 2400 0    50   ~ 0
 RXD
 Text Label 4550 2500 0    50   ~ 0
 TXD
+Wire Wire Line
+	3750 4100 3200 4100
+Wire Wire Line
+	3200 4200 3750 4200
+Wire Wire Line
+	3750 4300 3200 4300
+Wire Wire Line
+	3200 4400 3750 4400
+Wire Wire Line
+	3200 4500 3750 4500
+Wire Wire Line
+	3750 4700 3200 4700
+Wire Wire Line
+	3200 4800 3750 4800
+$Comp
+L Device:LED D1
+U 1 1 6263E05E
+P 4050 4800
+F 0 "D1" V 4089 4682 50  0000 R CNN
+F 1 "LED" V 3998 4682 50  0000 R CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Castellated" H 4050 4800 50  0001 C CNN
+F 3 "~" H 4050 4800 50  0001 C CNN
+	1    4050 4800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4050 4600 4050 4650
+Wire Wire Line
+	3200 4600 4050 4600
+$Comp
+L power:GND #PWR0110
+U 1 1 62640CA7
+P 4050 4950
+F 0 "#PWR0110" H 4050 4700 50  0001 C CNN
+F 1 "GND" H 4055 4777 50  0000 C CNN
+F 2 "" H 4050 4950 50  0001 C CNN
+F 3 "" H 4050 4950 50  0001 C CNN
+	1    4050 4950
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
