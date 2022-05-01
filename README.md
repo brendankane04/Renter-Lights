@@ -15,3 +15,7 @@ main.cpp: main file<br>
 
 Hardware.sch: The schematics for the minimum unit<br>
 Hardware.kicad_pcb: The layout file<br>
+
+# Mechanical
+
+The mechanical system is printed out with an Ender-Pro 3 3D printer.
