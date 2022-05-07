@@ -18,6 +18,6 @@ Hardware.kicad_pcb: The layout file<br>
 
 # Mechanical
 
-The mechanical system is printed out with an Ender-Pro 3 3D printer. Exploration of the printer is ongoing and going and going."
+The mechanical system is printed out with an Ender-Pro 3 3D printer. Exploration of the printer is ongoing and going and going."<br>
 
-Filament settings were changed."
+The filament was changed<br>
