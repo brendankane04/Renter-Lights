@@ -37,11 +37,14 @@ class Wifi_Interface
 
 
 	private:
-		//Connect to a wifi network
-		Wifi_Interface(char *ssid, char *password);
 
 
 	public:
+		//Constructor, Connect to a wifi network if specified
+		Wifi_Interface(char *ssid, char *password);
+		Wifi_Interface();
+		//Init, connect to a wifi network of not done in the constructor
+		void init(char *ssid, char *password);
 		//Return the instance of the object
 		static Wifi_Interface& get_instance(char *ssid, char *password);
 		//Set the target device ip & port you're talking to. Must be called before sending or receiving any data
@@ -54,5 +57,10 @@ class Wifi_Interface
 		void recv(char*, int);
 };
 
+extern Wifi_Interface wifi;
+
+
+//TODO: Move this into the class (Might've caused issues earlier....)
+void wifi_init_sta(char *ssid, char *password);
 
 #endif /* MAIN_WIFI_INTERFACE_H_ */

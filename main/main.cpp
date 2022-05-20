@@ -22,9 +22,10 @@ static const char *TAG = "main";
 #define	SERVO_SIG_GPIO	GPIO_NUM_14
 
 //Application-specific defines
-#define TARGET_IP "192.168.1.155"
+#define TARGET_IP "10.0.0.104"
 #define TARGET_PORT 21
-#define OPERATING_MODE 0
+#define OPERATING_MODE 2
+#define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!"
 
 
 extern "C" { void app_main(); }
@@ -34,7 +35,7 @@ extern "C" { void app_main(); }
 //Uncalled by the user, just used by the internals
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
-	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
+//	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
 
 	switch(id)
@@ -57,7 +58,6 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 //Call this function to run the device as a servo
 void servo_handler(void *arg)
 {
-	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
     SG90 servo(SERVO_SIG_GPIO);
     char buffer[8];
@@ -78,7 +78,6 @@ void servo_handler(void *arg)
 //Call this function to run the device as a PIR sensor
 int sensor_handler(void *arg)
 {
-	Wifi_Interface wifi = Wifi_Interface::get_instance("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
 
     //Start up a new sensor instance & run its internal handler
@@ -88,6 +87,11 @@ int sensor_handler(void *arg)
 
 void app_main(void)
 {
+	//Initialize the wifi
+	wifi.init("Home Network", "ThanksBrendan!");
+    wifi.set_target(TARGET_IP, TARGET_PORT);
+    SG90 servo(SERVO_SIG_GPIO);
+
 	switch(OPERATING_MODE)
 	{
 		case 0:
@@ -97,6 +101,10 @@ void app_main(void)
 			sensor_handler(NULL);
 			break;
 		default:
+			while(1)
+			{
+				wifi.send(TEST_STR);
+			}
 			break;
 	}
 }

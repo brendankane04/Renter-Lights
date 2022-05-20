@@ -12,6 +12,7 @@
 #define delay_min(min) for(int i = 0; i < min; i++) {delay_sec(60);}
 #define delay_hr(hour) for(int i = 0; i < hour; i++) {delay_min(60);}
 
+
 static const char *TAG = "SR501";
 
 
@@ -65,8 +66,6 @@ void poll_for_people(void *arg)
 
 		//Debugging section
 		ESP_LOGI(TAG, "Getting signal...");
-//		if(!status) wifi.send("SR501: Getting signal: LOW \n");
-//		else		wifi.send("SR501: Getting signal: HIGH\n");
 
 		if(status)
 		{//If it's high, set the status high & start the counter

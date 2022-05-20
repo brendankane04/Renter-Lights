@@ -44,6 +44,10 @@ static const char *TAG_TCP = "TCP Client";
 static int s_retry_num = 0;
 
 
+//Global object
+Wifi_Interface wifi;
+
+
 static void event_handler(void* arg, esp_event_base_t event_base,
 								int32_t event_id, void* event_data)
 {
@@ -155,15 +159,17 @@ void wifi_init_sta(char *ssid, char *password)
 }
 
 
-Wifi_Interface& Wifi_Interface::get_instance(char *ssid, char *password)
+Wifi_Interface::Wifi_Interface()
 {
-	static Wifi_Interface _global_interface(ssid, password);
-	ESP_LOGI(TAG, "Returning instance");
-	return _global_interface;
+	//Copy the credentials of the wifi network
+	strcpy(this->ssid, "");
+	strcpy(this->password, "");
+
+	//Set up the mutex
+	mutex = xSemaphoreCreateMutex();
 }
 
-
-Wifi_Interface::Wifi_Interface(char *ssid, char* password)
+Wifi_Interface::Wifi_Interface(char *ssid, char *password)
 {
 	//Copy the credentials of the wifi network
 	strcpy(this->ssid, ssid);
@@ -172,10 +178,19 @@ Wifi_Interface::Wifi_Interface(char *ssid, char* password)
 	//Set up the mutex
 	mutex = xSemaphoreCreateMutex();
 
-	//Call to the reference code
+	//Call to the reference init
 	wifi_init_sta(this->ssid, this->password);
 }
 
+void Wifi_Interface::init(char *ssid, char *password)
+{
+	//Copy the credentials of the wifi network
+	strcpy(this->ssid, ssid);
+	strcpy(this->password, password);
+
+	//Call to the reference init
+	wifi_init_sta(this->ssid, this->password);
+}
 
 void Wifi_Interface::set_target(char *tcp_ip, int tcp_port)
 {
