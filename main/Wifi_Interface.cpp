@@ -240,7 +240,7 @@ void Wifi_Interface::send(char *data, int len)
 		{
 			ESP_LOGE(TAG_TCP, "... socket connect failed errno=%d", errno);
 			close(send_socket);
-			vTaskDelay(4000 / portTICK_PERIOD_MS);
+			vTaskDelay(400 / portTICK_PERIOD_MS);
 			continue;
 		}
 		ESP_LOGI(TAG_TCP, "... connected");

@@ -24,8 +24,8 @@ static const char *TAG = "main";
 //Application-specific defines
 #define TARGET_IP "10.0.0.104"
 #define TARGET_PORT 21
-#define OPERATING_MODE 2
-#define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!"
+#define OPERATING_MODE 0
+#define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!\n"
 
 
 extern "C" { void app_main(); }
@@ -85,6 +85,22 @@ int sensor_handler(void *arg)
     return sensor->enable(); //Return the success status of the RTOS call
 }
 
+//Call this function to just run a blink
+int blink_handler(void *arg)
+{
+	gpio_pad_select_gpio(BLINK_GPIO);
+	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+
+	while (1)
+	{
+		gpio_set_level(BLINK_GPIO, 0);
+		delay(1000);
+		gpio_set_level(BLINK_GPIO, 1);
+		delay(1000);
+//		wifi.send(TEST_STR);
+	}
+}
+
 void app_main(void)
 {
 	//Initialize the wifi
@@ -100,11 +116,9 @@ void app_main(void)
 		case 1:
 			sensor_handler(NULL);
 			break;
+		case 2:
+			blink_handler(NULL);
 		default:
-			while(1)
-			{
-				wifi.send(TEST_STR);
-			}
 			break;
 	}
 }
