@@ -76,21 +76,22 @@ void servo_handler(void *arg)
 
 	while(1)
 	{
+		servo.set_off();
 		blink();
-		wifi.recv(buffer, 8);
-
-		if(strcmp(buffer, SERVO_ON) == 0)
-		{
-			servo.set_on();
-		}
-		else if(strcmp(buffer, SERVO_OFF) == 0)
-		{
-			servo.set_off();
-		}
-		else
-		{
-			ESP_LOGW(TAG, "Unexpected servo signal received");
-		}
+		servo.set_on();
+//		wifi.recv(buffer, 8);
+//		if(strcmp(buffer, SERVO_ON) == 0)
+//		{
+//			servo.set_on();
+//		}
+//		else if(strcmp(buffer, SERVO_OFF) == 0)
+//		{
+//			servo.set_off();
+//		}
+//		else
+//		{
+//			ESP_LOGW(TAG, "Unexpected servo signal received");
+//		}
 	}
 }
 
