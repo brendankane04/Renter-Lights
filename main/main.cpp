@@ -31,6 +31,15 @@ static const char *TAG = "main";
 extern "C" { void app_main(); }
 
 
+//Generic blink
+void blink()
+{
+	gpio_set_level(BLINK_GPIO, 0);
+	delay(1000);
+	gpio_set_level(BLINK_GPIO, 1);
+	delay(1000);
+}
+
 //Send signals to the network based on the input
 //Uncalled by the user, just used by the internals
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
@@ -62,16 +71,26 @@ void servo_handler(void *arg)
     SG90 servo(SERVO_SIG_GPIO);
     char buffer[8];
 
+	gpio_pad_select_gpio(BLINK_GPIO);
+	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+
 	while(1)
 	{
+		blink();
 		wifi.recv(buffer, 8);
 
 		if(strcmp(buffer, SERVO_ON) == 0)
+		{
 			servo.set_on();
+		}
 		else if(strcmp(buffer, SERVO_OFF) == 0)
+		{
 			servo.set_off();
+		}
 		else
+		{
 			ESP_LOGW(TAG, "Unexpected servo signal received");
+		}
 	}
 }
 
@@ -107,6 +126,9 @@ void app_main(void)
 	wifi.init("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
     SG90 servo(SERVO_SIG_GPIO);
+
+	gpio_pad_select_gpio(BLINK_GPIO);
+	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
 	switch(OPERATING_MODE)
 	{
