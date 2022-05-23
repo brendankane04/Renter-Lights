@@ -24,7 +24,7 @@ static const char *TAG = "main";
 //Application-specific defines
 #define TARGET_IP "10.0.0.104"
 #define TARGET_PORT 21
-#define OPERATING_MODE 0
+#define OPERATING_MODE 2
 #define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!\n"
 
 
@@ -77,8 +77,9 @@ void servo_handler(void *arg)
 	while(1)
 	{
 		servo.set_off();
-		blink();
+		delay(1000);
 		servo.set_on();
+		delay(1000);
 //		wifi.recv(buffer, 8);
 //		if(strcmp(buffer, SERVO_ON) == 0)
 //		{
