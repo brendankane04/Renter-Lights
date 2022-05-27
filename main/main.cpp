@@ -24,7 +24,7 @@ static const char *TAG = "main";
 //Application-specific defines
 #define TARGET_IP "10.0.0.104"
 #define TARGET_PORT 21
-#define OPERATING_MODE 2
+#define OPERATING_MODE 0
 #define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!\n"
 
 
@@ -76,23 +76,21 @@ void servo_handler(void *arg)
 
 	while(1)
 	{
-		servo.set_off();
-		delay(1000);
-		servo.set_on();
-		delay(1000);
-//		wifi.recv(buffer, 8);
-//		if(strcmp(buffer, SERVO_ON) == 0)
-//		{
-//			servo.set_on();
-//		}
-//		else if(strcmp(buffer, SERVO_OFF) == 0)
-//		{
-//			servo.set_off();
-//		}
-//		else
-//		{
-//			ESP_LOGW(TAG, "Unexpected servo signal received");
-//		}
+		memset(buffer, 0x00, 8);
+		wifi.recv(buffer, 8);
+		wifi.send(buffer, 8);
+		if(strncmp(buffer, SERVO_ON, 8) == 0)
+		{
+			servo.set_on();
+		}
+		else if(strncmp(buffer, SERVO_OFF, 8) == 0)
+		{
+			servo.set_off();
+		}
+		else
+		{
+			ESP_LOGW(TAG, "Unexpected servo signal received %s", buffer);
+		}
 	}
 }
 
