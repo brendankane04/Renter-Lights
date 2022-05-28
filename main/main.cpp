@@ -71,14 +71,11 @@ void servo_handler(void *arg)
     SG90 servo(SERVO_SIG_GPIO);
     char buffer[8];
 
-	gpio_pad_select_gpio(BLINK_GPIO);
-	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
-
 	while(1)
 	{
+		//Read in a string & do a servo command based on it
 		memset(buffer, 0x00, 8);
 		wifi.recv(buffer, 8);
-		wifi.send(buffer, 8);
 		if(strncmp(buffer, SERVO_ON, 8) == 0)
 		{
 			servo.set_on();
@@ -91,6 +88,7 @@ void servo_handler(void *arg)
 		{
 			ESP_LOGW(TAG, "Unexpected servo signal received %s", buffer);
 		}
+		delay(100);
 	}
 }
 
