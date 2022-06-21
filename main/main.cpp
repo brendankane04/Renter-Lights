@@ -76,6 +76,7 @@ void servo_handler(void *arg)
 		//Read in a string & do a servo command based on it
 		memset(buffer, 0x00, 8);
 		wifi.recv(buffer, 8);
+		ESP_LOGI(TAG, "Received signal (%s)", buffer);
 		if(strncmp(buffer, SERVO_ON, 8) == 0)
 		{
 			servo.set_on();
@@ -111,9 +112,9 @@ int blink_handler(void *arg)
 	while (1)
 	{
 		gpio_set_level(BLINK_GPIO, 0);
-		delay(1000);
+		delay(100);
 		gpio_set_level(BLINK_GPIO, 1);
-		delay(1000);
+		delay(100);
 //		wifi.send(TEST_STR);
 	}
 }

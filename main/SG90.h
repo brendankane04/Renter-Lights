@@ -21,8 +21,8 @@ class SG90
 		static const int SERVO_MAX_DEGREE = 180; //Maximum angle in degree upto which servo can rotate
 
 		//Lever control constants
-		static const int SERVO_ON_DEGREE = 180;
-		static const int SERVO_OFF_DEGREE = 0;
+		static const int SERVO_ON_DEGREE = 90;
+		static const int SERVO_OFF_DEGREE = 180;
 
 
 	public:
