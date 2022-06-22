@@ -69,12 +69,12 @@ void servo_handler(void *arg)
 {
     wifi.set_target(TARGET_IP, TARGET_PORT);
     SG90 servo(SERVO_SIG_GPIO);
-    char buffer[8];
+    char buffer[9];
 
 	while(1)
 	{
 		//Read in a string & do a servo command based on it
-		memset(buffer, 0x00, 8);
+		memset(buffer, 0x00, 9);
 		wifi.recv(buffer, 8);
 		ESP_LOGI(TAG, "Received signal (%s)", buffer);
 		if(strncmp(buffer, SERVO_ON, 8) == 0)
