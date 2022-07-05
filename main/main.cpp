@@ -142,4 +142,6 @@ void app_main(void)
 		default:
 			break;
 	}
+
+	while(true) {;} //Run in main loop to keep watchdog from firing
 }

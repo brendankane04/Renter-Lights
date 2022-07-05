@@ -371,41 +371,22 @@ Connection ~ 1800 1700
 Wire Wire Line
 	1800 1700 2600 1700
 Connection ~ 1800 2000
-Text Label 5700 5400 0    50   ~ 0
+Text Label 5900 5300 0    50   ~ 0
 MTMS
-Wire Wire Line
-	5700 5400 6200 5400
-$Comp
-L Connector_Generic:Conn_01x03 J7
-U 1 1 6211C164
-P 6400 5400
-F 0 "J7" V 6364 5212 50  0000 R CNN
-F 1 "Conn_01x03" V 6273 5212 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 6400 5400 50  0001 C CNN
-F 3 "~" H 6400 5400 50  0001 C CNN
-	1    6400 5400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6050 5300 6200 5300
 $Comp
 L power:GND #PWR0109
 U 1 1 6211EACD
-P 6050 5600
-F 0 "#PWR0109" H 6050 5350 50  0001 C CNN
-F 1 "GND" H 6055 5427 50  0000 C CNN
-F 2 "" H 6050 5600 50  0001 C CNN
-F 3 "" H 6050 5600 50  0001 C CNN
-	1    6050 5600
+P 5900 5600
+F 0 "#PWR0109" H 5900 5350 50  0001 C CNN
+F 1 "GND" H 5905 5427 50  0000 C CNN
+F 2 "" H 5900 5600 50  0001 C CNN
+F 3 "" H 5900 5600 50  0001 C CNN
+	1    5900 5600
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6200 5500 6050 5500
-Wire Wire Line
-	6050 5500 6050 5600
-Wire Wire Line
-	6050 5200 6050 5300
-Text Label 6050 5200 2    50   ~ 0
+	5900 5500 5900 5600
+Text Label 6150 5400 2    50   ~ 0
 VDD33
 Text Notes 6350 5250 0    50   ~ 0
 Servo
@@ -536,6 +517,23 @@ F 1 "GND" H 4055 4777 50  0000 C CNN
 F 2 "" H 4050 4950 50  0001 C CNN
 F 3 "" H 4050 4950 50  0001 C CNN
 	1    4050 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5900 5300 6200 5300
+Wire Wire Line
+	5900 5500 6200 5500
+Wire Wire Line
+	5900 5400 6200 5400
+$Comp
+L Connector_Generic:Conn_01x03 J7
+U 1 1 6211C164
+P 6400 5400
+F 0 "J7" V 6364 5212 50  0000 R CNN
+F 1 "Conn_01x03" V 6273 5212 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 6400 5400 50  0001 C CNN
+F 3 "~" H 6400 5400 50  0001 C CNN
+	1    6400 5400
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
