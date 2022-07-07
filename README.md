@@ -19,3 +19,6 @@ main.cpp: main file<br>
 # Mechanical
 
 
+# Backend
+
+A mosquitto MQTT broker server is used to interface the devicecs
