@@ -8,9 +8,16 @@
 
 #include "MQTT.h"
 #include "esp_log.h"
+#include "SG90.h"
+
+
+#define	SERVO_SIG_GPIO	GPIO_NUM_14
 
 
 static const char *TAG = "mqtt";
+
+
+static SG90 servo(SERVO_SIG_GPIO);
 
 
 static void log_error_if_nonzero(const char *message, int error_code)
@@ -31,17 +38,20 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
     {
 		case MQTT_EVENT_CONNECTED:
 			ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
-			msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1, 0);
-			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
+//			msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1, 0);
+//			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 
-			msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
+//			msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
+//			ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
+
+			msg_id = esp_mqtt_client_subscribe(client, "/topic/test_topic", 0);
 			ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
 
-			msg_id = esp_mqtt_client_subscribe(client, "/topic/qos1", 1);
-			ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
+//			msg_id = esp_mqtt_client_subscribe(client, "/topic/qos1", 1);
+//			ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
 
-			msg_id = esp_mqtt_client_unsubscribe(client, "/topic/qos1");
-			ESP_LOGI(TAG, "sent unsubscribe successful, msg_id=%d", msg_id);
+//			msg_id = esp_mqtt_client_unsubscribe(client, "/topic/qos1");
+//			ESP_LOGI(TAG, "sent unsubscribe successful, msg_id=%d", msg_id);
 		break;
 		case MQTT_EVENT_DISCONNECTED:
 			ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
@@ -62,6 +72,22 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 			ESP_LOGI(TAG, "MQTT_EVENT_DATA");
 			ESP_LOGI(TAG, "TOPIC=%.*s\r\n", event->topic_len, event->topic);
 			ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
+
+
+			if(strncmp(event->data, SERVO_ON, event->data_len) == 0)
+			{
+				servo.set_on();
+			}
+			else if(strncmp(event->data, SERVO_OFF, event->data_len) == 0)
+			{
+				servo.set_off();
+			}
+			else
+			{
+				ESP_LOGW(TAG, "Unexpected servo signal received %s", event->data);
+				ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
+			}
+
 		break;
 		case MQTT_EVENT_ERROR:
 			ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
