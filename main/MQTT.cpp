@@ -73,7 +73,6 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 			ESP_LOGI(TAG, "TOPIC=%.*s\r\n", event->topic_len, event->topic);
 			ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
 
-
 			if(strncmp(event->data, SERVO_ON, event->data_len) == 0)
 			{
 				servo.set_on();
@@ -84,8 +83,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 			}
 			else
 			{
-				ESP_LOGW(TAG, "Unexpected servo signal received %s", event->data);
-				ESP_LOGI(TAG, "DATA=%.*s\r\n", event->data_len, event->data);
+				ESP_LOGW(TAG, "Unexpected servo signal received %.*s", event->data_len, event->data);
 			}
 
 		break;
