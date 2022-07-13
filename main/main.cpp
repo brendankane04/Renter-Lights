@@ -132,19 +132,24 @@ void app_main(void)
 
 	mqtt_init();
 
-	switch(OPERATING_MODE)
-	{
-		case 0:
-			servo_handler(NULL);
-		break;
-		case 1:
-			sensor_handler(NULL);
-		break;
-		case 2:
-			blink_handler(NULL);
-		default:
-		break;
-	}
 
-	while(true) {;} //Run in main loop to keep watchdog from firing
+//	switch(OPERATING_MODE)
+//	{
+//		case 0:
+//			servo_handler(NULL);
+//		break;
+//		case 1:
+//			sensor_handler(NULL);
+//		break;
+//		case 2:
+//			blink_handler(NULL);
+//		default:
+//		break;
+//	}
+
+	while(true) //Run in main loop to keep watchdog from firing
+	{
+		servo.set_on();
+		delay(100);
+	}
 }

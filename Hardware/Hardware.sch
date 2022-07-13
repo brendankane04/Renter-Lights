@@ -120,7 +120,7 @@ F 3 "" H 650 2800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 3250 2500 0    50   ~ 0
-Boot_Option
+PIR_INPUT
 $Comp
 L Connector_Generic:Conn_01x02 J1
 U 1 1 62092936
@@ -133,7 +133,7 @@ F 3 "~" H 6700 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 6650 2450 0    50   ~ 0
-Boot Option\n
+PIR Sensor\n
 Wire Wire Line
 	6000 2500 6500 2500
 $Comp
@@ -179,7 +179,7 @@ MTCK
 Text Label 5650 3750 0    50   ~ 0
 MTDO
 Text Label 6000 2500 0    50   ~ 0
-Boot_Option
+PIR_INPUT
 Wire Wire Line
 	6400 3650 6150 3650
 $Comp
@@ -282,9 +282,7 @@ Wire Wire Line
 	6100 4550 5950 4550
 Wire Wire Line
 	5950 4550 5950 4650
-Wire Wire Line
-	5950 4350 5950 4450
-Text Label 5950 4350 2    50   ~ 0
+Text Label 8000 4350 2    50   ~ 0
 VDD33
 Text Notes 6250 4400 0    50   ~ 0
 Battery Input
@@ -534,6 +532,38 @@ F 1 "Conn_01x03" V 6273 5212 50  0000 R CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 6400 5400 50  0001 C CNN
 F 3 "~" H 6400 5400 50  0001 C CNN
 	1    6400 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Regulator_Linear:AMS1117-3.3 U2
+U 1 1 62CE3E15
+P 7400 4350
+F 0 "U2" H 7400 4592 50  0000 C CNN
+F 1 "AMS1117-3.3" H 7400 4501 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-223-3_TabPin2" H 7400 4550 50  0001 C CNN
+F 3 "http://www.advanced-monolithic.com/pdf/ds1117.pdf" H 7500 4100 50  0001 C CNN
+	1    7400 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7700 4350 8000 4350
+Wire Wire Line
+	7100 4350 7000 4350
+Wire Wire Line
+	7000 4350 7000 4200
+Wire Wire Line
+	7000 4200 5950 4200
+Wire Wire Line
+	5950 4200 5950 4450
+$Comp
+L power:GND #PWR0111
+U 1 1 62CF0C97
+P 7400 4650
+F 0 "#PWR0111" H 7400 4400 50  0001 C CNN
+F 1 "GND" H 7405 4477 50  0000 C CNN
+F 2 "" H 7400 4650 50  0001 C CNN
+F 3 "" H 7400 4650 50  0001 C CNN
+	1    7400 4650
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
