@@ -1,6 +1,6 @@
 # Renter Lights
 
-Automatic light control which doesn't involve messing with your light switches & angering your landlords
+Automatic light control which doesn't involve messing with your light switches & talking to your landlords
 
 # Firmware 
 
