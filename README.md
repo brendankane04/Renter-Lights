@@ -21,4 +21,4 @@ main.cpp: main file<br>
 
 # Backend
 
-A mosquitto MQTT broker server is used to interface the devicecs
+A mosquitto MQTT broker server on a raspberry pi is used to interface the devicecs. Just get one up & running.
