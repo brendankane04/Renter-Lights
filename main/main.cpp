@@ -116,7 +116,6 @@ int blink_handler(void *arg)
 		delay(1000);
 		gpio_set_level(BLINK_GPIO, 1);
 		delay(1000);
-//		wifi.send(TEST_STR);
 	}
 }
 
