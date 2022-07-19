@@ -15,7 +15,7 @@
 #define CONFIG_BROKER_URL "mqtt://testserver.local:1883"
 
 
-void mqtt_init();
+esp_mqtt_client_handle_t mqtt_init();
 
 
 #endif /* MAIN_MQTT_H_ */

@@ -106,7 +106,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
 
 //MQTT setup
-void mqtt_init()
+esp_mqtt_client_handle_t mqtt_init()
 {
 	esp_mqtt_client_config_t mqtt_cfg =
 	{
@@ -117,4 +117,6 @@ void mqtt_init()
 	/* The last argument may be used to pass data to the event handler, in this example mqtt_event_handler */
 	esp_mqtt_client_register_event(client, MQTT_EVENT_ANY, mqtt_event_handler, NULL);
 	esp_mqtt_client_start(client);
+
+	return client;
 }

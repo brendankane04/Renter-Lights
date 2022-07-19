@@ -31,6 +31,7 @@ static const char *TAG = "main";
 
 extern "C" { void app_main(); }
 
+esp_mqtt_client_handle_t static client;
 
 //Generic blink
 void blink()
@@ -46,6 +47,7 @@ void blink()
 //Uncalled by the user, just used by the internals
 void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t id, void* event_data)
 {
+    int msg_id;
     wifi.set_target(TARGET_IP, TARGET_PORT);
 
 	switch(id)
@@ -53,14 +55,20 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 		case PIR_EVENT_ENTERED_ROOM:
 			ESP_LOGI(TAG, "PIR_ENTERED");
 			wifi.send("PIR_ENTERED\n");
+			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", "SERVO_ON", 0, 1, 0);
+			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
 		case PIR_EVENT_EXITED_ROOM:
 			ESP_LOGI(TAG, "PIR_EXITED");
 			wifi.send("PIR_EXITED\n");
+			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", "SERVO_OFF", 0, 1, 0);
+			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
 		default:
 			ESP_LOGI(TAG, "PIR_UNDEFINED");
 			wifi.send("PIR_UNDEFINED");
+			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", "UNDEFINED", 0, 1, 0);
+			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
 	}
 }
@@ -129,7 +137,7 @@ void app_main(void)
 	gpio_pad_select_gpio(BLINK_GPIO);
 	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
-	mqtt_init();
+	client = mqtt_init();
 
 
 //	switch(OPERATING_MODE)
