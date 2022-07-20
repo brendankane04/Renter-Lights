@@ -41,6 +41,8 @@ SR501::SR501(gpio_num_t pin, external_handler_t external_handler)
     input_io.pull_down_en = GPIO_PULLDOWN_ENABLE;
     input_io.intr_type = GPIO_INTR_DISABLE;
     gpio_config(&input_io);
+
+    ESP_LOGI(TAG, "SR501 %d Initialized", pin);
 }
 
 
