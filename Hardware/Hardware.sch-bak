@@ -133,7 +133,7 @@ F 3 "~" H 6700 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Notes 6650 2450 0    50   ~ 0
-Boot Option\n
+PIR Sensor\n
 Wire Wire Line
 	6000 2500 6500 2500
 $Comp
@@ -385,7 +385,7 @@ $EndComp
 Wire Wire Line
 	5900 5500 5900 5600
 Text Label 6150 5400 2    50   ~ 0
-VDD33
+BATT_POS
 Text Notes 6350 5250 0    50   ~ 0
 Servo
 Text Notes 8250 4200 0    50   ~ 0
@@ -566,4 +566,6 @@ F 3 "" H 7400 4650 50  0001 C CNN
 	1    7400 4650
 	1    0    0    -1  
 $EndComp
+Text Label 5950 4200 0    50   ~ 0
+BATT_POS
 $EndSCHEMATC
