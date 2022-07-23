@@ -354,7 +354,7 @@ F 3 "~" H 8450 4600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 8850 4600 2    50   ~ 0
-VDD33
+BATT_POS
 Wire Wire Line
 	8450 4600 8450 4750
 Wire Wire Line
