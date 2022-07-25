@@ -11,16 +11,13 @@
 #include "SR501.h"
 #include "MQTT.h"
 #include "Wifi_Interface.h"
+#include "pins.h"
 
 
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
 static const char *TAG = "main";
 
-//GPIOs currently in use
-#define BLINK_GPIO 		GPIO_NUM_33
-#define	PIR_SIG_GPIO 	GPIO_NUM_23
-#define	SERVO_SIG_GPIO	GPIO_NUM_14
 
 //Application-specific defines
 #define TARGET_IP "10.0.0.104"
