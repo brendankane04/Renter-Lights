@@ -20,15 +20,16 @@ static const char *TAG = "main";
 
 
 //Application-specific defines
+typedef enum {SERVO_MODE, SENSOR_MODE, BLINK_MODE} operating_mode_t;
 #define TARGET_IP "10.0.0.104"
 #define TARGET_PORT 21
-#define OPERATING_MODE 2
 #define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!\n"
 
 
 extern "C" { void app_main(); }
 
 esp_mqtt_client_handle_t static client;
+operating_mode_t operating_mode = BLINK_MODE;
 
 //Generic blink
 void blink()
@@ -137,15 +138,15 @@ void app_main(void)
 	client = mqtt_init();
 
 
-//	switch(OPERATING_MODE)
+//	switch(operating_mode)
 //	{
-//		case 0:
+//		case SERVO_MODE:
 //			servo_handler(NULL);
 //		break;
-//		case 1:
+//		case SENSOR_MODE:
 //			sensor_handler(NULL);
 //		break;
-//		case 2:
+//		case BLINK_MODE:
 //			blink_handler(NULL);
 //		default:
 //		break;
