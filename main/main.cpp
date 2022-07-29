@@ -12,6 +12,7 @@
 #include "SR501.h"
 #include "MQTT.h"
 #include "pins.h"
+#include "esp_sleep.h"
 
 
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
@@ -136,6 +137,8 @@ void app_main(void)
 	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
 	client = mqtt_init();
+
+	esp_sleep_enable_ext0_wakeup(PIR_SIG_GPIO,1);
 
 	esp_light_sleep_start();
 
