@@ -137,18 +137,19 @@ void app_main(void)
 
 	client = mqtt_init();
 
+	esp_light_sleep_start();
 
-	switch(operating_mode)
-	{
-		case SERVO_MODE:
-			servo_handler(NULL);
-		break;
-		case SENSOR_MODE:
-			sensor_handler(NULL);
-		break;
-		case BLINK_MODE:
-			blink_handler(NULL);
-		default:
-		break;
-	}
+//	switch(operating_mode)
+//	{
+//		case SERVO_MODE:
+//			servo_handler(NULL);
+//		break;
+//		case SENSOR_MODE:
+//			sensor_handler(NULL);
+//		break;
+//		case BLINK_MODE:
+//			blink_handler(NULL);
+//		default:
+//		break;
+//	}
 }
