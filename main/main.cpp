@@ -138,7 +138,8 @@ void app_main(void)
 
 	client = mqtt_init();
 
-	esp_sleep_enable_ext0_wakeup(PIR_SIG_GPIO,1);
+//	esp_sleep_enable_ext0_wakeup(PIR_SIG_GPIO,1);
+	esp_sleep_enable_wifi_wakeup();
 
 	esp_light_sleep_start();
 
