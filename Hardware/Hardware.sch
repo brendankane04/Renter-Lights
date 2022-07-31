@@ -568,4 +568,38 @@ F 3 "" H 7400 4650 50  0001 C CNN
 $EndComp
 Text Label 5950 4200 0    50   ~ 0
 BATT_POS
+Wire Wire Line
+	7650 5850 7700 5850
+Wire Wire Line
+	7650 6050 7700 6050
+Text Label 8400 5850 2    50   ~ 0
+BATT_POS
+$Comp
+L power:GND #PWR0112
+U 1 1 62E680F0
+P 8400 6050
+F 0 "#PWR0112" H 8400 5800 50  0001 C CNN
+F 1 "GND" H 8405 5877 50  0000 C CNN
+F 2 "" H 8400 6050 50  0001 C CNN
+F 3 "" H 8400 6050 50  0001 C CNN
+	1    8400 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Jack-DC J5
+U 1 1 62E6932D
+P 7400 5950
+F 0 "J5" H 7457 6275 50  0000 C CNN
+F 1 "Jack-DC" H 7457 6184 50  0000 C CNN
+F 2 "Connector_BarrelJack:BarrelJack_CUI_PJ-102AH_Horizontal" H 7450 5910 50  0001 C CNN
+F 3 "~" H 7450 5910 50  0001 C CNN
+	1    7400 5950
+	1    0    0    -1  
+$EndComp
+Connection ~ 7700 5850
+Wire Wire Line
+	7700 5850 8400 5850
+Connection ~ 7700 6050
+Wire Wire Line
+	7700 6050 8400 6050
 $EndSCHEMATC
