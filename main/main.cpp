@@ -24,13 +24,12 @@ static const char *TAG = "main";
 typedef enum {SERVO_MODE, SENSOR_MODE, BLINK_MODE} operating_mode_t;
 #define TARGET_IP "10.0.0.104"
 #define TARGET_PORT 21
-#define TEST_STR "TEST STRING. If you're seeing this, the refactor worked!\n"
 
 
 extern "C" { void app_main(); }
 
 esp_mqtt_client_handle_t static client;
-operating_mode_t operating_mode = BLINK_MODE;
+operating_mode_t operating_mode = SENSOR_MODE;
 
 //Generic blink
 void blink()
@@ -53,19 +52,19 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 	{
 		case PIR_EVENT_ENTERED_ROOM:
 			ESP_LOGI(TAG, "PIR_ENTERED");
-			wifi.send("PIR_ENTERED\n");
-			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", "SERVO_ON", 0, 1, 0);
+//			wifi.send("PIR_ENTERED\n");
+			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", SERVO_ON, 0, 1, 0);
 			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
 		case PIR_EVENT_EXITED_ROOM:
 			ESP_LOGI(TAG, "PIR_EXITED");
-			wifi.send("PIR_EXITED\n");
-			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", "SERVO_OFF", 0, 1, 0);
+//			wifi.send("PIR_EXITED\n");
+			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", SERVO_OFF, 0, 1, 0);
 			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
 		default:
 			ESP_LOGI(TAG, "PIR_UNDEFINED");
-			wifi.send("PIR_UNDEFINED");
+//			wifi.send("PIR_UNDEFINED");
 			msg_id = esp_mqtt_client_publish(client, "/topic/test_topic", "UNDEFINED", 0, 1, 0);
 			ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
@@ -119,9 +118,9 @@ int blink_handler(void *arg)
 
 	while (1)
 	{
-		gpio_set_level(BLINK_GPIO, 0);
+		gpio_set_level(BLINK_GPIO, false);
 		delay(1000);
-		gpio_set_level(BLINK_GPIO, 1);
+		gpio_set_level(BLINK_GPIO, true);
 		delay(1000);
 	}
 }
@@ -131,29 +130,25 @@ void app_main(void)
 	//Initialize the wifi
 	wifi.init("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
-    SG90 servo(SERVO_SIG_GPIO);
-
-	gpio_pad_select_gpio(BLINK_GPIO);
-	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
 	client = mqtt_init();
 
 //	esp_sleep_enable_ext0_wakeup(PIR_SIG_GPIO,1);
-	esp_sleep_enable_wifi_wakeup();
+//	esp_sleep_enable_wifi_wakeup();
 
-	esp_light_sleep_start();
+//	esp_light_sleep_start();
 
-//	switch(operating_mode)
-//	{
-//		case SERVO_MODE:
-//			servo_handler(NULL);
-//		break;
-//		case SENSOR_MODE:
-//			sensor_handler(NULL);
-//		break;
-//		case BLINK_MODE:
-//			blink_handler(NULL);
-//		default:
-//		break;
-//	}
+	switch(operating_mode)
+	{
+		case SERVO_MODE:
+			servo_handler(NULL);
+		break;
+		case SENSOR_MODE:
+			sensor_handler(NULL);
+		break;
+		case BLINK_MODE:
+			blink_handler(NULL);
+		default:
+		break;
+	}
 }

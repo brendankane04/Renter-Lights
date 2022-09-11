@@ -11,7 +11,7 @@
 
 //GPIOs currently in use
 #define BLINK_GPIO 		GPIO_NUM_33
-#define	PIR_SIG_GPIO 	GPIO_NUM_23
+#define	PIR_SIG_GPIO 	GPIO_NUM_0
 #define	SERVO_SIG_GPIO	GPIO_NUM_14
 
 

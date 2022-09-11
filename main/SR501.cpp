@@ -67,7 +67,7 @@ void poll_for_people(void *arg)
 		status = task_this->get_signal();
 
 		//Debugging section
-		ESP_LOGI(TAG, "Getting signal...");
+		ESP_LOGI(TAG, "Getting signal: %s", (status) ? "HIGH" : "LOW");
 
 		if(status)
 		{//If it's high, set the status high & start the counter
