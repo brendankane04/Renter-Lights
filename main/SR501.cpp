@@ -4,6 +4,7 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "SR501.h"
+#include "pins.h"
 
 
 //Modified delay functions
@@ -71,38 +72,44 @@ void poll_for_people(void *arg)
 
 		if(status)
 		{//If it's high, set the status high & start the counter
-			if(!task_this->populated)
-			{//If transitioning from unpopulated to populated, send a signal
-				ESP_LOGI(TAG, "ENTERED");
-				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
-			}
-			task_this->populated = true;
-			minutes_off = 0;
-			sec_off = 0;
-			delay(100);
+//			if(!task_this->populated)
+//			{//If transitioning from unpopulated to populated, send a signal
+//				ESP_LOGI(TAG, "ENTERED");
+//				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
+//			}
+//			task_this->populated = true;
+//			minutes_off = 0;
+//			sec_off = 0;
+//			delay(100);
+			task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_ENTERED_ROOM, NULL);
+			gpio_set_level(LED_GPIO, true);
 		}
 		else
 		{//If it's low, wait a minute & decrement the counter
-			delay_sec(task_this->polling_delay);
-			sec_off += task_this->polling_delay;
-			if(sec_off >= 60)
-			{
-				sec_off = 0;
-				minutes_off++;
-			}
+//			delay_sec(task_this->polling_delay);
+//			sec_off += task_this->polling_delay;
+//			if(sec_off >= 60)
+//			{
+//				sec_off = 0;
+//				minutes_off++;
+//			}
+			task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL);
+			gpio_set_level(LED_GPIO, false);
 		}
 
+		delay(1000);
+
 		//If the counter reaches the maximum time, set the status to off
-		if(minutes_off >= 30)
-		{
-			if(task_this->populated)
-			{//If transitioning to from populated to unpopulated, send a signal
-				ESP_LOGI(TAG, "EXITED");
-				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL);
-			}
-			task_this->populated = 0;
-			minutes_off = 0;
-		}
+//		if(minutes_off >= 30)
+//		{
+//			if(task_this->populated)
+//			{//If transitioning to from populated to unpopulated, send a signal
+//				ESP_LOGI(TAG, "EXITED");
+//				task_this->external_handler(NULL, PIR_EVENT, PIR_EVENT_EXITED_ROOM, NULL);
+//			}
+//			task_this->populated = 0;
+//			minutes_off = 0;
+//		}
 	}
 }
 

@@ -34,9 +34,9 @@ operating_mode_t operating_mode = SENSOR_MODE;
 //Generic blink
 void blink()
 {
-	gpio_set_level(BLINK_GPIO, 0);
+	gpio_set_level(LED_GPIO, 0);
 	delay(1000);
-	gpio_set_level(BLINK_GPIO, 1);
+	gpio_set_level(LED_GPIO, 1);
 	delay(1000);
 }
 
@@ -113,20 +113,21 @@ int sensor_handler(void *arg)
 //Call this function to just run a blink
 int blink_handler(void *arg)
 {
-	gpio_pad_select_gpio(BLINK_GPIO);
-	gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
-
 	while (1)
 	{
-		gpio_set_level(BLINK_GPIO, false);
+		gpio_set_level(LED_GPIO, false);
 		delay(1000);
-		gpio_set_level(BLINK_GPIO, true);
+		gpio_set_level(LED_GPIO, true);
 		delay(1000);
 	}
 }
 
 void app_main(void)
 {
+	//Initialize the LED GPIO
+	gpio_pad_select_gpio(LED_GPIO);
+	gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
+
 	//Initialize the wifi
 	wifi.init("Home Network", "ThanksBrendan!");
     wifi.set_target(TARGET_IP, TARGET_PORT);
