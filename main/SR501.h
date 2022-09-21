@@ -6,6 +6,9 @@
 #include "esp_event.h"
 
 
+using namespace std;
+
+
 typedef void (*external_handler_t)(void*, esp_event_base_t, int32_t, void*);
 
 //Defines for the event loop

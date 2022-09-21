@@ -7,6 +7,9 @@
 #include "pins.h"
 
 
+using namespace std;
+
+
 //Modified delay functions
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 #define delay_sec(sec) for(int i = 0; i < sec; i++) {delay(1000);}

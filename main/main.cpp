@@ -14,6 +14,7 @@
 #include "pins.h"
 #include "esp_sleep.h"
 
+using namespace std;
 
 #define delay(cnt) vTaskDelay(cnt / portTICK_PERIOD_MS)
 
@@ -29,7 +30,7 @@ typedef enum {SERVO_MODE, SENSOR_MODE, BLINK_MODE} operating_mode_t;
 extern "C" { void app_main(); }
 
 esp_mqtt_client_handle_t static client;
-operating_mode_t operating_mode = SENSOR_MODE;
+operating_mode_t operating_mode = BLINK_MODE;
 
 //Generic blink
 void blink()
@@ -113,6 +114,10 @@ int sensor_handler(void *arg)
 //Call this function to just run a blink
 int blink_handler(void *arg)
 {
+	//Initialize the LED GPIO
+	gpio_pad_select_gpio(LED_GPIO);
+	gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
+
 	while (1)
 	{
 		gpio_set_level(LED_GPIO, false);
