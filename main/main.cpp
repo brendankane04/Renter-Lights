@@ -30,7 +30,7 @@ typedef enum {SERVO_MODE, SENSOR_MODE, BLINK_MODE} operating_mode_t;
 extern "C" { void app_main(); }
 
 esp_mqtt_client_handle_t static client;
-operating_mode_t operating_mode = BLINK_MODE;
+operating_mode_t operating_mode = SENSOR_MODE;
 
 //Generic blink
 void blink()
@@ -143,6 +143,8 @@ void app_main(void)
 //	esp_sleep_enable_wifi_wakeup();
 
 //	esp_light_sleep_start();
+
+	blink();
 
 	switch(operating_mode)
 	{
