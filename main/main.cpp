@@ -76,7 +76,7 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 void servo_handler(void *arg)
 {
     wifi.set_target(TARGET_IP, TARGET_PORT);
-    SG90 servo(SERVO_SIG_GPIO);
+    SG90 servo(TEMP_SIG_GPIO);
     char buffer[9];
 
 	while(1)
