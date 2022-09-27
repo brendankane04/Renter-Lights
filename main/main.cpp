@@ -73,7 +73,7 @@ void populated_signal_handler(void* handler_arg, esp_event_base_t base, int32_t 
 }
 
 //Call this function to run the device as a servo
-void servo_handler(void *arg)
+void servo_fn(void *arg)
 {
     wifi.set_target(TARGET_IP, TARGET_PORT);
     SG90 servo(TEMP_SIG_GPIO);
@@ -102,7 +102,7 @@ void servo_handler(void *arg)
 }
 
 //Call this function to run the device as a PIR sensor
-int sensor_handler(void *arg)
+int sensor_fn(void *arg)
 {
     wifi.set_target(TARGET_IP, TARGET_PORT);
 
@@ -112,7 +112,7 @@ int sensor_handler(void *arg)
 }
 
 //Call this function to just run a blink
-int blink_handler(void *arg)
+int blink_fn(void *arg)
 {
 	//Initialize the LED GPIO
 	gpio_pad_select_gpio(LED_GPIO);
@@ -149,13 +149,13 @@ void app_main(void)
 	switch(operating_mode)
 	{
 		case SERVO_MODE:
-			servo_handler(NULL);
+			servo_fn(NULL);
 		break;
 		case SENSOR_MODE:
-			sensor_handler(NULL);
+			sensor_fn(NULL);
 		break;
 		case BLINK_MODE:
-			blink_handler(NULL);
+			blink_fn(NULL);
 		default:
 		break;
 	}
