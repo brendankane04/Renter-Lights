@@ -30,7 +30,7 @@ typedef enum {SERVO_MODE, SENSOR_MODE, BLINK_MODE} operating_mode_t;
 extern "C" { void app_main(); }
 
 esp_mqtt_client_handle_t static client;
-operating_mode_t operating_mode = SENSOR_MODE;
+operating_mode_t operating_mode = SERVO_MODE;
 
 //Generic blink
 void blink()
@@ -107,7 +107,7 @@ int sensor_fn(void *arg)
     wifi.set_target(TARGET_IP, TARGET_PORT);
 
     //Start up a new sensor instance & run its internal handler
-    SR501 *sensor = new SR501(PIR_SIG_GPIO, populated_signal_handler);
+    SR501 *sensor = new SR501(TEMP_SIG_GPIO, populated_signal_handler);
     return sensor->enable(); //Return the success status of the RTOS call
 }
 
