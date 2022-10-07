@@ -117,13 +117,14 @@ int blink_fn(void *arg)
 	//Initialize the LED GPIO
 	gpio_pad_select_gpio(LED_GPIO);
 	gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
+	const int delay = 1000;
 
 	while (1)
 	{
 		gpio_set_level(LED_GPIO, false);
-		delay(1000);
+		delay(delay);
 		gpio_set_level(LED_GPIO, true);
-		delay(1000);
+		delay(delay);
 	}
 }
 
